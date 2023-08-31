@@ -1,0 +1,185 @@
+<div class="position-relative iq-banner">
+    <nav class="nav navbar navbar-expand-lg navbar-light iq-navbar">
+        <div class="container-fluid navbar-inner">
+            <a href="../../dashboard/index.html" class="navbar-brand">
+
+                <h3 th:text="#{header.title}"></h3>
+            </a>
+            <div class="sidebar-toggle" data-toggle="sidebar" data-active="true">
+                <i class="icon">
+                    <svg width="20px" class="icon-20" viewBox="0 0 24 24">
+                        <path fill="currentColor"
+                              d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z"></path>
+                    </svg>
+                </i>
+            </div>
+            <div class="input-group search-input">
+                <h3 th:text="#{header.title}"></h3>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon">
+                  <span class="mt-2 navbar-toggler-bar bar1"></span>
+                  <span class="navbar-toggler-bar bar2"></span>
+                  <span class="navbar-toggler-bar bar3"></span>
+                </span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="mb-2 navbar-nav ms-auto align-items-center navbar-list mb-lg-0">
+                    <li class="nav-item">
+                        <div style="display: flex; align-items: center">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="1.8em" viewBox="0 0 384 512" fill="currentColor"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path fill="currentColor" d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"/></svg>
+                            <div class="form-check form-switch" style="margin-left: 5px; margin-right: 5px">
+                                <input class="form-check-input" type="checkbox" id="switchTheme" style="height: 1.8em; width: 50px"/>
+                            </div>
+                            <svg xmlns="http://www.w3.org/2000/svg" height="1.8em" viewBox="0 0 512 512" fill="currentColor"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path fill="currentColor" d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z"/></svg>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="#" class="search-toggle nav-link" id="dropdownMenuButton2" data-bs-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">
+                            <div id="langDiv">
+                            </div>
+                            <span class="bg-primary"></span>
+                        </a>
+                        <div class="p-0 sub-drop dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton2">
+                            <div class="m-0 border-0 shadow-none card">
+                                <div class="p-0 ">
+                                    <ul class="p-0 list-group list-group-flush">
+                                        <li class="iq-sub-card list-group-item" onclick="changeLang('uk')"><a
+                                                class="p-0" href="#"><img th:src="@{/assets/images/Flag/flag-02.png}"
+                                                                          alt="img-flaf" class="img-fluid me-2"
+                                                                          style="width: 15px;height: 15px;min-width: 15px;">UA</a>
+                                        </li>
+                                        <li class="iq-sub-card list-group-item" onclick="changeLang('en')"><a
+                                                class="p-0" href="#"><img th:src="@{/assets/images/Flag/flag-01.png}"
+                                                                          alt="img-flaf" class="img-fluid me-2"
+                                                                          style="width: 15px;height: 15px;min-width: 15px;">EN</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link" id="mail-drop" data-bs-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="false">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path fill="currentColor" d="M224 0c-17.7 0-32 14.3-32 32V51.2C119 66 64 130.6 64 208v18.8c0 47-17.3 92.4-48.5 127.6l-7.4 8.3c-8.4 9.4-10.4 22.9-5.3 34.4S19.4 416 32 416H416c12.6 0 24-7.4 29.2-18.9s3.1-25-5.3-34.4l-7.4-8.3C401.3 319.2 384 273.9 384 226.8V208c0-77.4-55-142-128-156.8V32c0-17.7-14.3-32-32-32zm45.3 493.3c12-12 18.7-28.3 18.7-45.3H224 160c0 17 6.7 33.3 18.7 45.3s28.3 18.7 45.3 18.7s33.3-6.7 45.3-18.7z"/></svg>
+                            <span class="bg-primary count-mail"></span>
+                        </a>
+                        <div class="p-0 sub-drop dropdown-menu dropdown-menu-end" aria-labelledby="mail-drop">
+                            <div class="m-0 shadow-none card">
+                                <div class="py-3 card-header d-flex justify-content-between bg-primary">
+                                    <div class="header-title">
+                                        <h5 class="mb-0 text-white">All Message</h5>
+                                    </div>
+                                </div>
+                                <div class="p-0 card-body ">
+                                    <a href="#" class="iq-sub-card">
+                                        <div class="d-flex align-items-center">
+                                            <div class="">
+                                                <img class="p-1 avatar-40 rounded-pill bg-soft-primary"
+                                                     th:src="@{/assets/images/shapes/01.png}" alt="">
+                                            </div>
+                                            <div class="ms-3">
+                                                <h6 class="mb-0 ">Bni Emma Watson</h6>
+                                                <small class="float-start font-size-12">13 Jun</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="iq-sub-card">
+                                        <div class="d-flex align-items-center">
+                                            <div class="">
+                                                <img class="p-1 avatar-40 rounded-pill bg-soft-primary"
+                                                     th:src="@{/assets/images/shapes/02.png}" alt="">
+                                            </div>
+                                            <div class="ms-3">
+                                                <h6 class="mb-0 ">Lorem Ipsum Watson</h6>
+                                                <small class="float-start font-size-12">20 Apr</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="iq-sub-card">
+                                        <div class="d-flex align-items-center">
+                                            <div class="">
+                                                <img class="p-1 avatar-40 rounded-pill bg-soft-primary"
+                                                     th:src="@{/assets/images/shapes/03.png}" alt="">
+                                            </div>
+                                            <div class="ms-3">
+                                                <h6 class="mb-0 ">Why do we use it?</h6>
+                                                <small class="float-start font-size-12">30 Jun</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="iq-sub-card">
+                                        <div class="d-flex align-items-center">
+                                            <div class="">
+                                                <img class="p-1 avatar-40 rounded-pill bg-soft-primary"
+                                                     th:src="@{/assets/images/shapes/04.png}" alt="">
+                                            </div>
+                                            <div class="ms-3">
+                                                <h6 class="mb-0 ">Variations Passages</h6>
+                                                <small class="float-start font-size-12">12 Sep</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="iq-sub-card">
+                                        <div class="d-flex align-items-center">
+                                            <div class="">
+                                                <img class="p-1 avatar-40 rounded-pill bg-soft-primary"
+                                                     th:src="@{/assets/images/shapes/05.png}" alt="">
+                                            </div>
+                                            <div class="ms-3">
+                                                <h6 class="mb-0 ">Lorem Ipsum generators</h6>
+                                                <small class="float-start font-size-12">5 Dec</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="py-0 nav-link d-flex align-items-center" href="#" id="navbarDropdown" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            <img th:src="@{/assets/images/avatars/01.png}" alt="User-Profile"
+                                 class="theme-color-default-img img-fluid avatar avatar-50 avatar-rounded">
+                            <img th:src="@{/assets/images/avatars/avtar_1.png}" alt="User-Profile"
+                                 class="theme-color-purple-img img-fluid avatar avatar-50 avatar-rounded">
+                            <img th:src="@{/assets/images/avatars/avtar_2.png}" alt="User-Profile"
+                                 class="theme-color-blue-img img-fluid avatar avatar-50 avatar-rounded">
+                            <img th:src="@{/assets/images/avatars/avtar_4.png}" alt="User-Profile"
+                                 class="theme-color-green-img img-fluid avatar avatar-50 avatar-rounded">
+                            <img th:src="@{/assets/images/avatars/avtar_5.png}" alt="User-Profile"
+                                 class="theme-color-yellow-img img-fluid avatar avatar-50 avatar-rounded">
+                            <img th:src="@{/assets/images/avatars/avtar_3.png}" alt="User-Profile"
+                                 class="theme-color-pink-img img-fluid avatar avatar-50 avatar-rounded">
+                            <div class="caption ms-3 d-none d-md-block ">
+                                <h6 class="mb-0 caption-title">Austin Robertson</h6>
+                            </div>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" th:href="@{/profile}">Profile</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#confirmLogOut">
+                                    Logout
+                                </button>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="iq-navbar-header" style="height: 70px;">
+        <div class="container-fluid iq-container">
+            <div class="row">
+            </div>
+        </div>
+
+    </div>
+</div>

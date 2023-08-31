@@ -1,0 +1,415 @@
+<!-- Library Bundle Script -->
+<script th:src="@{/assets/js/core/libs.min.js}"></script>
+
+<!-- External Library Bundle Script -->
+<script th:src="@{/assets/js/core/external.min.js}"></script>
+
+<!-- Widgetchart Script -->
+<script th:src="@{/assets/js/charts/widgetcharts.js}"></script>
+
+<!-- mapchart Script -->
+<script th:src="@{/assets/js/charts/vectore-chart.js}"></script>
+
+<script th:src="@{/assets/js/charts/dashboard.js}"></script>
+
+<!-- fslightbox Script -->
+<script th:src="@{/assets/js/plugins/fslightbox.js}"></script>
+
+<!-- Settings Script -->
+<script th:src="@{/assets/js/plugins/setting.js}"></script>
+
+<!-- Slider-tab Script -->
+<script th:src="@{/assets/js/plugins/slider-tabs.js}"></script>
+
+<!-- Form Wizard Script -->
+<script th:src="@{/assets/js/plugins/form-wizard.js}"></script>
+
+<!-- AOS Animation Plugin-->
+<script th:src="@{/assets/vendor/aos/dist/aos.js}"></script>
+
+<!-- App Script -->
+<script th:src="@{/assets/js/hope-ui.js}" defer></script>
+
+<!-- Flatpickr Script -->
+<script th:src="@{/assets/vendor/flatpickr/dist/flatpickr.min.js}"></script>
+
+<script th:src="@{/assets/js/plugins/flatpickr.js}" defer></script>
+
+<script th:src="@{/assets/js/select2/select2.full.min.js}"></script>
+
+<script th:src="@{/assets/js/select2/uk.js}"></script>
+
+<script th:src="@{/assets/js/quill/quil.js}"></script>
+
+<script th:src="@{/assets/js/quill/quill-image-resize.js}"></script>
+
+<script th:src="@{/assets/js/flatpickr/flatpickr.js}"></script>
+
+<script th:src="@{/assets/js/plugins/prism.mini.js}"></script>
+
+
+<script>
+
+    const targetElement = document.getElementById('sidebar');
+    const logoImg = document.getElementById('logoImg');
+
+    const observer = new MutationObserver((mutationsList) => {
+
+        for (const mutation of mutationsList) {
+
+            if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+
+                const newClass = targetElement.className;
+                if (newClass.indexOf('sidebar-mini') === 68 || newClass.indexOf('sidebar-mini') === 78){
+                    logoImg.src = '/cabinet/assets/images/pages/logo-mini.svg';
+                }
+                else if (newClass.indexOf('sidebar-mini') === -1){
+                    $.ajax({
+                        url: "/admin/get-locale"
+                    })
+                        .done(function (response){
+                            if (response === 'en') {
+                                logoImg.src = '/cabinet/assets/images/pages/logo-en.png';
+                            } else if (response === 'uk') {
+                                logoImg.src = '/cabinet/assets/images/pages/logo-ua1.png';
+                            }
+                        });
+                }
+
+            }
+        }
+    });
+
+    const config = { attributes: true };
+
+    observer.observe(targetElement, config);
+
+
+</script>
+<script>
+
+
+    function getCurrentURLWithoutParams() {
+
+        var currentURL = window.location.href;
+        if (currentURL.indexOf('?') === -1) {
+            return currentURL;
+        }
+        return currentURL.split('?')[0];
+    }
+
+    function changeLang(lang) {
+        var urlWithoutParams = getCurrentURLWithoutParams();
+        var newURL = urlWithoutParams + '?lang=' + lang;
+        window.location.replace(newURL);
+    }
+
+    function getLocale(){
+        $.ajax({
+            url: "/cabinet/get-locale"
+        })
+            .done(function (response){
+                const logoImg = document.getElementById('logoImg');
+                const container = document.getElementById("langDiv");
+                const newImg = document.createElement("img");
+                newImg.classList.add("img-fluid");
+                newImg.classList.add("rounded-circle");
+                newImg.style.height = "30px";
+                newImg.style.width = "30px";
+                newImg.style.minWidth = "30px";
+                newImg.alt="lang";
+                newImg.id = "langImg"
+                if (response === 'en') {
+                    newImg.src = '/cabinet/assets/images/Flag/flag001.png';
+                    logoImg.src = '/cabinet/assets/images/pages/logo-en.png';
+                } else if (response === 'uk') {
+                    newImg.src  = '/cabinet/assets/images/Flag/flag002.png';
+                    logoImg.src = '/cabinet/assets/images/pages/logo-ua1.png';
+                }
+                container.appendChild(newImg);
+            });
+    }
+    getLocale();
+
+
+    const toastSuccess = bootstrap.Toast.getOrCreateInstance(document.getElementById('successUpdateRole'));
+    const toastError = bootstrap.Toast.getOrCreateInstance(document.getElementById('errorUpdateRole'));
+
+    function showToast(toast) {
+        switch (toast) {
+            case "success":
+                toastSuccess.show();
+                break;
+            case "error":
+                toastError.show();
+                break;
+            default:
+                console.log("Unknown Toast");
+        }
+    }
+    function passwordVisibility() {
+        var getPassword = document.getElementById("password");
+        var confirmPassword = document.getElementById("confirmPassword");
+        if (getPassword.type === "password") {
+            getPassword.type = "text";
+            confirmPassword.type = "text";
+        } else {
+            getPassword.type = "password";
+            confirmPassword.type = "password";
+        }
+    }
+
+    function generatePassword() {
+        var chars = "0123456789abcdefghijklmnopqrstuvwxyz!@#$`~%^&*(*)ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        var passwordLength = 11;
+        var password = "";
+
+        for (var i = 0; i <= passwordLength; i++) {
+            var randomNumber = Math.floor(Math.random() * chars.length);
+            password += chars.substring(randomNumber, randomNumber + 1);
+        }
+        document.getElementById("password").value = password;
+        document.getElementById("confirmPassword").value = password;
+
+    }
+
+    function validResponse(divId, message, afterDiv) {
+
+        $(divId).addClass('is-invalid');
+        let validId = divId+'Valid';
+        if (afterDiv) {
+            $(divId).parents(afterDiv).append('<div class="invalid-feedback" id="'+validId+'">' + message + '</div>');
+        } else {
+            $(divId).after('<div class="invalid-feedback" id="'+validId+'">' + message + '</div>');
+        }
+    }
+
+    function clearValidMessages() {
+        $('.is-invalid').removeClass('is-invalid');
+        $('.invalid-feedback').remove();
+    }
+
+    function clearSimpleValidMessages(id) {
+        let validId = id +'Valid'
+        $('#'+id).removeClass('is-invalid');
+        $('#'+validId).remove();
+    }
+
+
+    function addBadgeUserStatus(status){
+
+        let badgeClasses = 'badge rounded-pill';
+        let badgeText = status?.value;
+
+        if (status?.name === 'ACTIVE') badgeClasses += ' bg-success';
+        if (status?.name === 'NEW') badgeClasses += ' bg-warning';
+        if (status?.name === 'DISABLED') badgeClasses += ' bg-danger';
+
+        return '<span class="' + badgeClasses + '">' + badgeText + '</span>';
+    }
+
+    function addBadgeApplicationStatus(status){
+
+        let badgeClasses = 'badge rounded-pill';
+        let badgeText = status?.value;
+
+        if (status?.name === 'IN_PROCESS') badgeClasses += ' bg-warning';
+        if (status?.name === 'NEW') badgeClasses += ' bg-primary';
+        if (status?.name === 'COMPLETED') badgeClasses += ' bg-success';
+
+        return '<span class="' + badgeClasses + '">' + badgeText + '</span>';
+    }
+
+    function addColorTextIncomeExpense(type){
+
+        let badgeClasses = '';
+        let badgeText = type?.value;
+
+        if (type?.name === 'INCOME') badgeClasses += 'text-success';
+        if (type?.name === 'EXPENSE') badgeClasses += 'text-danger';
+
+        return '<span class="' + badgeClasses + '">' + badgeText + '</span>';
+    }
+
+    function addBreadcrumbTitle(title){
+        return '<li class="breadcrumb-item active" aria-current="page">' + title + '</li>';
+    }
+
+    function handleScreenWidthChange() {
+        const screenWidth = window.innerWidth;
+        if (screenWidth<1200){
+            const sidebar = document.getElementById("sidebar");
+            sidebar.classList.add("sidebar-mini");
+        }
+    }
+    window.addEventListener("resize", handleScreenWidthChange);
+    handleScreenWidthChange();
+
+    function setEditorContentFromHTML(html) {
+        const delta = editor.clipboard.convert( html );
+        editor.setContents(delta);
+    }
+
+
+    window.addEventListener('load', function() {
+        var navLinks = document.querySelectorAll(".sidebar-active");
+        var pathAndQuery = window.location.pathname + window.location.search;
+        var pathSplit = pathAndQuery.split("/");
+        var chapter = pathSplit[2];
+
+        var ids = [];
+        for (var i = 0; i < navLinks.length; i++) {
+            ids.push(navLinks[i].id);
+        }
+        for (var i =0; i< ids.length; i++){
+            if (chapter.includes(ids[i]) && !chapter.includes("site") && !chapter.includes("system")){
+                var targetLinks = document.getElementById(ids[i]);
+                targetLinks.classList.add("active")
+            }
+            else{
+                if (pathSplit.length>3){
+                    var chapter1 = pathSplit[3];
+                    if (chapter1.includes(ids[i]) && chapter.includes("site")) {
+                        var targetLinksSite = document.getElementById(ids[i]);
+                        targetLinksSite.classList.add("active")
+                        var targetUlSite = document.getElementById("sidebar-special");
+                        var linkElement = document.getElementById('special-a');
+                        linkElement.setAttribute('aria-expanded', 'true');
+                        targetUlSite.classList.add("show");
+                    }
+                    else if(chapter1.includes(ids[i]) && chapter.includes("system")){
+                        var targetLinksSystem = document.getElementById(ids[i]);
+                        targetLinksSystem.classList.add("active")
+                        var targetUlSystem = document.getElementById("sidebar-icons");
+                        var linkElement1  = document.getElementById('icons-a');
+                        linkElement1.setAttribute('aria-expanded', 'true');
+                        targetUlSystem.classList.add("show");
+                    }
+                }
+            }
+        }
+    });
+
+    function addMeterReadingStatus(status){
+
+        let badgeClasses = 'badge rounded-pill';
+        let badgeText = status?.value;
+
+        if (status?.name === 'NEW') badgeClasses += ' bg-warning';
+        if (status?.name === 'ZERO') badgeClasses += ' bg-primary';
+        if (status?.name === 'CONSIDERED') badgeClasses += ' bg-success';
+        if (status?.name === 'CONSIDERED_PAID') badgeClasses += ' bg-success';
+
+        return '<span class="' + badgeClasses + '">' + badgeText + '</span>';
+    }
+
+
+    function formatNumberWithZeroes(number, length) {
+        const numString = number.toString();
+        const diff = length - numString.length;
+
+        if (diff > 0) {
+            const zeroes = '0'.repeat(diff);
+            return zeroes + numString;
+        }
+
+        return numString;
+    }
+
+    function changeTheme(checked){
+        if (checked){
+            const bodyElement = document.body;
+            bodyElement.classList.remove("dark");
+        }
+        else {
+            const bodyElement = document.body;
+            bodyElement.classList.add("dark");
+        }
+    }
+
+    const checkbox = document.getElementById('switchTheme');
+
+    checkbox.addEventListener('change', function() {
+        if (this.checked) {
+            $.ajax({
+                url: "/cabinet/change-theme",
+                method: "POST",
+                data:{
+                    theme: true
+                }
+            })
+            changeTheme(true);
+        } else {
+            $.ajax({
+                url: "/cabinet/change-theme",
+                method: "POST",
+                data:{
+                    theme: false
+                }
+            })
+            changeTheme(false);
+        }
+    });
+
+
+    $(document).ready ( function(){
+        function getTheme() {
+            $.ajax({
+                url: "/cabinet/get-theme"
+            })
+                .done(function(response) {
+                    const checkbox = document.getElementById('switchTheme');
+                    if (response === null) {
+                        checkbox.checked = true;
+                        changeTheme(true);
+                    } else {
+                        checkbox.checked = response;
+                        changeTheme(response);
+                    }
+                });
+        }
+
+        getTheme();
+    });
+</script>
+<script>
+
+
+    $('.form-select').on('select2:select', function(e) {
+        let isInvalidLength = document.querySelectorAll('.is-invalid');
+        let invalidFeedbackLength = document.querySelectorAll('.invalid-feedback');
+        if (isInvalidLength.length>0||invalidFeedbackLength>0) {
+            const selectId = e.target.id;
+            clearSimpleValidMessages(selectId);
+        }
+    });
+
+    const inputs = document.querySelectorAll('.form-control');
+
+    inputs.forEach(input => {
+        input.addEventListener('input', event => {
+            let isInvalidLength = document.querySelectorAll('.is-invalid');
+            let invalidFeedbackLength = document.querySelectorAll('.invalid-feedback');
+            if (isInvalidLength.length>0||invalidFeedbackLength>0) {
+                const inputId = event.target.id;
+                clearSimpleValidMessages(inputId);
+            }
+        });
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
