@@ -67,6 +67,9 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private Boolean duty;
 
+    @Column
+    private Boolean theme;
+
     @OneToMany(mappedBy = "user")
     private List<Apartment> apartmentList = new ArrayList<>();
 

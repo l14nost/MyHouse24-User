@@ -14,6 +14,7 @@
     <link rel="stylesheet" th:href="@{/assets/css/dark.min.css}"/>
     <link rel="stylesheet" th:href="@{/assets/css/customizer.min.css}"/>
     <link rel="stylesheet" th:href="@{/assets/css/rtl.min.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/edit.css}"/>
 
     <style class="fslightbox-styles">
 
@@ -112,7 +113,16 @@
     </div>
 </div>
 <!-- loader END -->
-
+<div class="toast-container position-fixed end-0 p-3">
+    <div id="errorUpdateRole" class="toast align-items-center text-bg-danger-toast border-0 bg-transparency" role="alert"
+         aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body" th:text="#{global.toast.error}"></div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+        </div>
+    </div>
+</div>
 <div class="wrapper">
     <section class="login-content">
         <div class="row m-0 align-items-center bg-white vh-100" style="display: flex; justify-content: center">
@@ -193,4 +203,33 @@
     </section>
 </div>
 </body>
+<!-- Library Bundle Script -->
+<script th:src="@{/assets/js/core/libs.min.js}"></script>
+
+<script>
+    const toastSuccess = bootstrap.Toast.getOrCreateInstance(document.getElementById('successUpdateRole'));
+    const toastError = bootstrap.Toast.getOrCreateInstance(document.getElementById('errorUpdateRole'));
+
+    function showToast(toast) {
+        switch (toast) {
+            case "success":
+                toastSuccess.show();
+                break;
+            case "error":
+                toastError.show();
+                break;
+            default:
+                console.log("Unknown Toast");
+        }
+    }
+    $(document).ready(function (){
+        var currentUrl = window.location.href;
+
+        var urlParams = new URLSearchParams(new URL(currentUrl).search);
+
+        if (urlParams.has("error")) {
+            showToast("error")
+        }
+    })
+</script>
 </html>

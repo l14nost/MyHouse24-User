@@ -65,7 +65,7 @@
                 }
                 else if (newClass.indexOf('sidebar-mini') === -1){
                     $.ajax({
-                        url: "/admin/get-locale"
+                        url: "/cabinet/get-locale"
                     })
                         .done(function (response){
                             if (response === 'en') {
@@ -370,6 +370,37 @@
         }
 
         getTheme();
+
+
+        $.ajax({
+            url: "/cabinet/user/get-current-user"
+        })
+            .done(function(response) {
+                $("#fullName-user").text(response.fullName)
+                $.each(response.apartments, function (index, entity) {
+                    let summaryContainer = document.getElementById("sidebar-summary");
+                    let newLi = document.createElement("li");
+                    newLi.classList.add("nav-item")
+                    newLi.innerHTML = " <a class=\"nav-link site sidebar-active\" href=\"/cabinet/summary/" + entity.id + "\" id=\"contact-page\">\n" +
+                        "                                <i class=\"icon\">\n" +
+                        "                                    <svg class=\"icon-10\" xmlns=\"http://www.w3.org/2000/svg\" width=\"10\" viewBox=\"0 0 24 24\" fill=\"currentColor\">\n" +
+                        "                                        <g>\n" +
+                        "                                            <circle cx=\"12\" cy=\"12\" r=\"8\" fill=\"currentColor\"></circle>\n" +
+                        "                                        </g>\n" +
+                        "                                    </svg>\n" +
+                        "                                </i>\n" +
+                        "                                <i class=\"sidenav-mini-icon\">\n" +
+                        "                                    <svg class=\"icon-10\" xmlns=\"http://www.w3.org/2000/svg\" width=\"10\" viewBox=\"0 0 24 24\" fill=\"currentColor\">\n" +
+                        "                                        <g>\n" +
+                        "                                            <circle cx=\"12\" cy=\"12\" r=\"8\" fill=\"currentColor\"></circle>\n" +
+                        "                                        </g>\n" +
+                        "                                    </svg> </i>\n" +
+                        "                                <span class=\"item-name\">"+entity.fullName+"</span>\n" +
+                        "                            </a>"
+                    summaryContainer.appendChild(newLi);
+                });
+            });
+
     });
 </script>
 <script>
