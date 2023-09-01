@@ -376,7 +376,9 @@
             url: "/cabinet/user/get-current-user"
         })
             .done(function(response) {
+
                 $("#fullName-user").text(response.fullName)
+                $("#header-avatar").attr("src", "/cabinet/files/"+response.filename)
                 $.each(response.apartments, function (index, entity) {
                     let summaryContainer = document.getElementById("sidebar-summary");
                     let newLi = document.createElement("li");

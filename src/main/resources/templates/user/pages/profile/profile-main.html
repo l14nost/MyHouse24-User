@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/user/fragments/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title th:text = "#{left.sidebar.profile}"></title>
+    <th:block layout:fragment="extra-style">
+    </th:block>
+
+</head>
+<th:block layout:fragment="content">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between">
+                <div class="header-title">
+                    <h4 class="card-title" th:text = "#{left.sidebar.profile}"></h4>
+                </div>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a th:href="@{/statistics}" th:text = "#{global.breadcrumb.main}"></a></li>
+                        <li class="breadcrumb-item active" aria-current="page" th:text = "#{left.sidebar.profile}"></li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="card-body px-0">
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="row">
+                                <div class="row">
+                                    <div style="display: flex; justify-content: center">
+                                        <div class="profile-img-edit photo" >
+                                            <img class="personPhoto" alt="user-card img" id="avatar" >
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div style="display: flex; justify-content: center">
+                                            <h3 id="fullName"></h3>
+                                        </div>
+                                        <div style="display: flex; justify-content: center">
+                                            <p th:text="#{profile.status}"></p>
+                                        </div>
+
+                                    </div>
+                                    <div style="display: flex; justify-content: center; width: 150%">
+                                        <ul class="list-group list-group-unbordered" style="width: 100%">
+                                            <li class="list-group-item">
+                                                <span th:text="#{profile.edit.number}"></span>
+                                                <span class="pull-right" id="number"></span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <span>Viber: </span>
+                                                <span class="pull-right" id="viber"></span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <span>Telegram: </span>
+                                                <span class="pull-right" id="telegram"></span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <span th:text="#{profile.edit.email}"> </span>
+                                                <span class="pull-right" id="email"></span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="d-flex justify-content-center">
+                                        <a class="btn btn-primary" style="width: 80%; margin-top: 10px" th:text="#{global.breadcrumb.editing}" th:href="@{/profile/edit}"></a>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 20px">
+                                    <h3 th:text="#{profile.edit.notes}"></h3>
+                                    <ul class="list-group list-group-unbordered">
+                                        <li class="list-group-item">
+                                            <span id="notes">
+                                            </span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8" id="apartmentContainer">
+                            <h4 th:text="#{profile.apartment.title}"></h4>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</th:block>
+<th:block layout:fragment="extra-modals">
+</th:block>
+<th:block layout:fragment="extra-script">
+    <script>
+        $(document).ready(function (){
+                $.ajax({
+                    url: "/cabinet/user/get-user-profile"
+                }).done(
+                    function (response){
+                        console.log(response);
+                        $("#fullName").text(response.fullName);
+                        $("#notes").text(response.notes);
+                        $("#number").text(response.number);
+                        $("#viber").text(response.viber);
+                        $("#telegram").text(response.telegram);
+                        $("#email").text(response.email);
+                        $("#avatar").attr("src", "/cabinet/files/"+response.filename);
+
+                        $.each(response.apartments, function (index, entity) {
+                            let summaryContainer = document.getElementById("apartmentContainer");
+                            let newLi = document.createElement("div");
+                            newLi.classList.add("row");
+                            newLi.style.marginTop = "20px"
+                            newLi.innerHTML = "<ul class=\"list-group list-group-unbordered\">\n" +
+                                "                                    <li class=\"list-group-item\">\n" +
+                                "                                        <span>"+"[[#{profile.apartment.description}]]"+"</span>\n" +
+                                "                                    </li>\n" +
+                                "                                    <li class=\"list-group-item\">\n" +
+                                "                                        <span>"+entity.fullName+"</span>\n" +
+                                "                                        <div class=\"row\" style=\"margin-top: 20px\">\n" +
+                                "                                            <div class=\"col-md-6\">\n" +
+                                "                                                <img style=\"width: 100%; height: 100%\" id=\"image1\" src=\"/cabinet/files/"+entity.image1+"\">\n" +
+                                "                                            </div>\n" +
+                                "                                            <div class=\"col-md-6\" style=\"align-items: center\">\n" +
+                                "                                                <div class=\"row\" style=\"height: 100%;align-items: center\">\n" +
+                                "                                                    <div class=\"row\" style=\" height: 45%\">\n" +
+                                "                                                        <div class=\"col-md-6\">\n" +
+                                "                                                            <img style=\"width: 100%; height: 100%\" id=\"image2\" src=\"/cabinet/files/"+entity.image2+"\">\n" +
+                                "                                                        </div>\n" +
+                                "                                                        <div class=\"col-md-6\">\n" +
+                                "                                                            <img style=\"width: 100%; height: 100%\" id=\"image3\" src=\"/cabinet/files/"+entity.image3+"\">\n" +
+                                "                                                        </div>\n" +
+                                "                                                    </div>\n" +
+                                "                                                    <div class=\"row\" style=\" height: 50%; padding-top: 5%\">\n" +
+                                "                                                        <div class=\"col-md-6\">\n" +
+                                "                                                            <img style=\"width: 100%; height: 100%\" id=\"image4\" src=\"/cabinet/files/"+entity.image4+"\">\n" +
+                                "                                                        </div>\n" +
+                                "                                                        <div class=\"col-md-6\">\n" +
+                                "                                                            <img style=\"width: 100%; height: 100%\" id=\"image5\" src=\"/cabinet/files/"+entity.image5+"\">\n" +
+                                "                                                        </div>\n" +
+                                "                                                    </div>\n" +
+                                "                                                </div>\n" +
+                                "                                            </div>\n" +
+                                "                                        </div>\n" +
+                                "                                        <table class=\"table table-striped table-bordered\" style=\"width: 100%; margin-top: 20px\">\n" +
+                                "\n" +
+                                "                                            <colgroup>\n" +
+                                "                                                <col style=\"width:35%\">\n" +
+                                "                                                <col style=\"width:65%\">\n" +
+                                "                                            </colgroup>\n" +
+                                "                                            <tbody id=\"userTable\" >\n" +
+                                "                                            <tr>\n" +
+                                "                                                <td colspan=\"2\" style=\"text-align: center;\">"+"[[#{profile.description}]]"+"</td>\n" +
+                                "                                            </tr>\n" +
+                                "                                            <tr>\n" +
+                                "                                                <td><b>"+"[[#{profile.house.name}]]"+"</b></td>\n" +
+                                "                                                <td>"+entity.houseName+"</td>\n" +
+                                "                                            </tr>\n" +
+                                "                                            <tr>\n" +
+                                "                                                <td><b>"+"[[#{profile.address}]]"+"</b></td>\n" +
+                                "                                                <td>"+entity.address+"</td>\n" +
+                                "                                            </tr>\n" +
+                                "                                            <tr>\n" +
+                                "                                                <td><b>"+"[[#{profile.number}]]"+"</b></td>\n" +
+                                "                                                <td>"+entity.number+"</td>\n" +
+                                "                                            </tr>\n" +
+                                "                                            <tr>\n" +
+                                "                                                <td><b>"+"[[#{profile.area}]]"+"</b></td>\n" +
+                                "                                                <td>"+entity.area+"</td>\n" +
+                                "                                            </tr>\n" +
+                                "                                            <tr>\n" +
+                                "                                                <td><b>"+"[[#{profile.floor}]]"+"</b></td>\n" +
+                                "                                                <td>"+entity.floorName+"</td>\n" +
+                                "                                            </tr>\n" +
+                                "                                            <tr>\n" +
+                                "                                                <td><b>"+"[[#{profile.section}]]"+"</b></td>\n" +
+                                "                                                <td>"+entity.sectionName+"</td>\n" +
+                                "                                            </tr>\n" +
+                                "                                            <tr>\n" +
+                                "                                                <td><b>"+"[[#{profile.bank.book}]]"+"</b></td>\n" +
+                                "                                                <td>"+entity.bankBookNumber+"</td>\n" +
+                                "                                            </tr>\n" +
+                                "                                            </tbody>\n" +
+                                "                                        </table>\n" +
+                                "\n" +
+                                "\n" +
+                                "                                    </li>\n" +
+                                "                                </ul>";
+                            summaryContainer.appendChild(newLi);
+                        });
+                    }
+                )
+        })
+
+    </script>
+</th:block>
+</html>

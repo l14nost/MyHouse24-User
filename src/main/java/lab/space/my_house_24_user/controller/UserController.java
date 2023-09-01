@@ -17,4 +17,9 @@ public class UserController {
     public ResponseEntity getCurrentUser(){
         return ResponseEntity.ok(userService.getUserForSidebar());
     }
+
+    @GetMapping("/get-user-profile")
+    public ResponseEntity getUserProfile(){
+        return ResponseEntity.ok(userService.findUserForProfile());
+    }
 }

@@ -8,6 +8,7 @@ import java.util.List;
 public record UserResponseForSidebar(
         Long id,
         String fullName,
+        String filename,
         List <ApartmentResponseForSidebar> apartments
 ) {
 }
