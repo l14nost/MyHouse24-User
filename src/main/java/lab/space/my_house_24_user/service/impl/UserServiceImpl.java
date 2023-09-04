@@ -11,6 +11,7 @@ import lab.space.my_house_24_user.repository.UserRepository;
 import lab.space.my_house_24_user.service.UserService;
 import lab.space.my_house_24_user.util.FileHandler;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -77,7 +78,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public void update(UserEditRequest userEditRequest) {
         User user = findById(userEditRequest.id());
+        Boolean changeAuthenticate = false;
         String filenameDelete = user.getFilename();
+        String oldEmail = user.getEmail();
 
         user.setDate(userEditRequest.date().atStartOfDay(ZoneId.systemDefault()).toInstant());
         user.setFirstname(userEditRequest.firstname());
@@ -94,7 +97,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         }
         if (!userEditRequest.password().isEmpty()){
             user.setPassword(new BCryptPasswordEncoder().encode(userEditRequest.password()));
+            changeAuthenticate = true;
+        }
+        if (!oldEmail.equals(user.getEmail())){
+            changeAuthenticate = true;
         }
         userRepository.save(user);
+        if (changeAuthenticate){
+            Authentication authentication = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword(),new ArrayList<>());
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+        }
+
     }
 }
