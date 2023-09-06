@@ -65,78 +65,31 @@
                     <li class="nav-item dropdown">
                         <a href="#" class="nav-link" id="mail-drop" data-bs-toggle="dropdown" aria-haspopup="true"
                            aria-expanded="false">
-                            <svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path fill="currentColor" d="M224 0c-17.7 0-32 14.3-32 32V51.2C119 66 64 130.6 64 208v18.8c0 47-17.3 92.4-48.5 127.6l-7.4 8.3c-8.4 9.4-10.4 22.9-5.3 34.4S19.4 416 32 416H416c12.6 0 24-7.4 29.2-18.9s3.1-25-5.3-34.4l-7.4-8.3C401.3 319.2 384 273.9 384 226.8V208c0-77.4-55-142-128-156.8V32c0-17.7-14.3-32-32-32zm45.3 493.3c12-12 18.7-28.3 18.7-45.3H224 160c0 17 6.7 33.3 18.7 45.3s28.3 18.7 45.3 18.7s33.3-6.7 45.3-18.7z"/></svg>
-                            <span class="bg-primary count-mail"></span>
+                            <div style="position: relative; display: inline-block;">
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 600 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path fill="currentColor" d="M224 0c-17.7 0-32 14.3-32 32V51.2C119 66 64 130.6 64 208v18.8c0 47-17.3 92.4-48.5 127.6l-7.4 8.3c-8.4 9.4-10.4 22.9-5.3 34.4S19.4 416 32 416H416c12.6 0 24-7.4 29.2-18.9s3.1-25-5.3-34.4l-7.4-8.3C401.3 319.2 384 273.9 384 226.8V208c0-77.4-55-142-128-156.8V32c0-17.7-14.3-32-32-32zm45.3 493.3c12-12 18.7-28.3 18.7-45.3H224 160c0 17 6.7 33.3 18.7 45.3s28.3 18.7 45.3 18.7s33.3-6.7 45.3-18.7z"/></svg>
+                                </div>
+                                <span class="badge rounded-pill bg-warning text-white" id="countMessage" style="position: absolute;top: 0;right: 0;"></span>
+                            </div>
                         </a>
                         <div class="p-0 sub-drop dropdown-menu dropdown-menu-end" aria-labelledby="mail-drop">
                             <div class="m-0 shadow-none card">
-                                <div class="py-3 card-header d-flex justify-content-between bg-primary">
+                                <div class="py-2 card-header d-flex justify-content-center bg-primary">
                                     <div class="header-title">
-                                        <h5 class="mb-0 text-white">All Message</h5>
+                                        <h5 class="mb-0 text-white" th:text="#{header.new.message}"></h5>
                                     </div>
                                 </div>
-                                <div class="p-0 card-body ">
-                                    <a href="#" class="iq-sub-card">
-                                        <div class="d-flex align-items-center">
-                                            <div class="">
-                                                <img class="p-1 avatar-40 rounded-pill bg-soft-primary"
-                                                     th:src="@{/assets/images/shapes/01.png}" alt="">
-                                            </div>
-                                            <div class="ms-3">
-                                                <h6 class="mb-0 ">Bni Emma Watson</h6>
-                                                <small class="float-start font-size-12">13 Jun</small>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a href="#" class="iq-sub-card">
-                                        <div class="d-flex align-items-center">
-                                            <div class="">
-                                                <img class="p-1 avatar-40 rounded-pill bg-soft-primary"
-                                                     th:src="@{/assets/images/shapes/02.png}" alt="">
-                                            </div>
-                                            <div class="ms-3">
-                                                <h6 class="mb-0 ">Lorem Ipsum Watson</h6>
-                                                <small class="float-start font-size-12">20 Apr</small>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a href="#" class="iq-sub-card">
-                                        <div class="d-flex align-items-center">
-                                            <div class="">
-                                                <img class="p-1 avatar-40 rounded-pill bg-soft-primary"
-                                                     th:src="@{/assets/images/shapes/03.png}" alt="">
-                                            </div>
-                                            <div class="ms-3">
-                                                <h6 class="mb-0 ">Why do we use it?</h6>
-                                                <small class="float-start font-size-12">30 Jun</small>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a href="#" class="iq-sub-card">
-                                        <div class="d-flex align-items-center">
-                                            <div class="">
-                                                <img class="p-1 avatar-40 rounded-pill bg-soft-primary"
-                                                     th:src="@{/assets/images/shapes/04.png}" alt="">
-                                            </div>
-                                            <div class="ms-3">
-                                                <h6 class="mb-0 ">Variations Passages</h6>
-                                                <small class="float-start font-size-12">12 Sep</small>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a href="#" class="iq-sub-card">
-                                        <div class="d-flex align-items-center">
-                                            <div class="">
-                                                <img class="p-1 avatar-40 rounded-pill bg-soft-primary"
-                                                     th:src="@{/assets/images/shapes/05.png}" alt="">
-                                            </div>
-                                            <div class="ms-3">
-                                                <h6 class="mb-0 ">Lorem Ipsum generators</h6>
-                                                <small class="float-start font-size-12">5 Dec</small>
-                                            </div>
-                                        </div>
-                                    </a>
+                                <div class="p-0 card-body" id="containerNewMessage">
                                 </div>
+                                <a th:href="@{/messages}">
+                                    <div class="py-0 card-footer d-flex justify-content-center bg-light">
+
+                                            <div class="header-title">
+                                                    <h7 class="mb-0 text-dark" th:text="#{header.new.message.view.all}"></h7>
+                                            </div>
+
+                                    </div>
+                                </a>
                             </div>
                         </div>
                     </li>

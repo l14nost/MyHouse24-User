@@ -56,7 +56,10 @@ public record UserEditRequest(
         String password,
 
         @Size(max = 20, message = "{size.less.message}"+" 20")
-        String confirmPassword
+        String confirmPassword,
+        @NotBlank(message = "{not.blank.message}")
+        @Size(max = 20, message = "{size.less.message}"+" 20")
+        String currentPassword
 
 
 

@@ -2,13 +2,19 @@ package lab.space.my_house_24_user.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
 import lab.space.my_house_24_user.entity.User;
+import lab.space.my_house_24_user.enums.UserStatus;
 import lab.space.my_house_24_user.mapper.UserMapper;
+import lab.space.my_house_24_user.model.auth.ForgotPassRequest;
+import lab.space.my_house_24_user.model.auth.ForgotRequest;
+import lab.space.my_house_24_user.model.auth.RegisterRequest;
 import lab.space.my_house_24_user.model.user.UserEditRequest;
 import lab.space.my_house_24_user.model.user.UserResponseForEdit;
 import lab.space.my_house_24_user.model.user.UserResponseForProfile;
 import lab.space.my_house_24_user.model.user.UserResponseForSidebar;
 import lab.space.my_house_24_user.repository.UserRepository;
+import lab.space.my_house_24_user.service.JwtService;
 import lab.space.my_house_24_user.service.UserService;
+import lab.space.my_house_24_user.util.CustomMailSender;
 import lab.space.my_house_24_user.util.FileHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,8 +24,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.time.ZoneId;
 import java.util.ArrayList;
 
@@ -27,6 +35,11 @@ import java.util.ArrayList;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
+    private final CustomMailSender customMailSender;
+
+    private final String url = "http://localhost:8082/cabinet/";
 
 
     @Override
@@ -109,4 +122,48 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         }
 
     }
+
+    @Override
+    public void register(RegisterRequest registerRequest) {
+        User user = User.builder()
+                .password(passwordEncoder.encode(registerRequest.password()))
+                .email(registerRequest.email())
+                .duty(false)
+                .addDate(Instant.now())
+                .userStatus(UserStatus.NEW)
+                .lastname(registerRequest.lastname())
+                .firstname(registerRequest.firstname())
+                .surname(registerRequest.surname())
+                .build();
+
+        userRepository.save(user);
+    }
+
+    @Override
+    public void sendForgotPasswordLetter(ForgotRequest forgotRequest) {
+        User user = findUserByEmail(forgotRequest.email());
+        String token = jwtService.generateToken(user);
+        user.setForgotToken(token);
+        user.setForgotTokenUsage(false);
+        userRepository.save(user);
+        customMailSender.send(user.getEmail(), url + "login/forgot-password/" + token, "Forgot Password");
+    }
+
+    @Override
+    public UserDetails loadUserByToken(String token) {
+        return loadUserByUsername(jwtService.extractUsername(token));
+    }
+
+    @Override
+    public void forgotPassword(ForgotPassRequest forgotPassRequest, String token) {
+        User user = findUserByEmail(loadUserByToken(token).getUsername());
+        user.setForgotTokenUsage(true);
+        user.setPassword(passwordEncoder.encode(forgotPassRequest.password()));
+        userRepository.save(user);
+        String textForSend = "Dear " + user.getLastname() + " " + user.getFirstname() + ", your password has been changed!\n" +
+                "For detail information contact our support team";
+        customMailSender.send(user.getEmail(), textForSend, "Password Change Notification");
+
+    }
+
 }

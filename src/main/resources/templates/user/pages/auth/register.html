@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Sign up</title>
+
+    <link rel="shortcut icon" th:href="@{/assets/images/pages/favicon.png}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/core/libs.min.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/hope-ui.min.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/custom.min.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/dark.min.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/customizer.min.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/rtl.min.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/edit.css}"/>
+
+    <style class="fslightbox-styles">
+
+        @keyframes fslightbox-fade-in {
+            from {
+                opacity: .65
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        @keyframes fslightbox-fade-out {
+            from {
+                opacity: .35
+            }
+            to {
+                opacity: 0
+            }
+        }
+
+        @keyframes fslightbox-fade-in-strong {
+            from {
+                opacity: .3
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        @keyframes fslightbox-fade-out-strong {
+            from {
+                opacity: 1
+            }
+            to {
+                opacity: 0
+            }
+        }
+
+        .fslightbox-container * {
+            box-sizing: border-box
+        }
+
+        .fslightbox-slide-number-container .fslightbox-flex-centered {
+            height: 100%
+        }
+
+        .fslightbox-toolbar-button:hover .fslightbox-svg-path {
+            fill: #fff
+        }
+
+        .fslightbox-slide-btn-container:hover .fslightbox-svg-path {
+            fill: #f1f1f1
+        }
+
+        .fslightbox-loader div {
+            box-sizing: border-box;
+            display: block;
+            position: absolute;
+            width: 54px;
+            height: 54px;
+            margin: 6px;
+            border: 5px solid;
+            border-color: #999 transparent transparent transparent;
+            border-radius: 50%;
+            animation: fslightbox-loader 1.2s cubic-bezier(.5, 0, .5, 1) infinite
+        }
+
+        .fslightbox-loader div:nth-child(1) {
+            animation-delay: -.45s
+        }
+
+        .fslightbox-loader div:nth-child(2) {
+            animation-delay: -.3s
+        }
+
+        .fslightbox-loader div:nth-child(3) {
+            animation-delay: -.15s
+        }
+
+        @keyframes fslightbox-loader {
+            0% {
+                transform: rotate(0)
+            }
+            100% {
+                transform: rotate(360deg)
+            }
+        }
+    </style>
+</head>
+<body class=" " data-bs-spy="scroll" data-bs-target="#elements-section" data-bs-offset="0" tabindex="0">
+<!-- loader Start -->
+<div id="loading">
+    <div class="loader simple-loader animate__animated animate__fadeOut d-none">
+        <div class="loader-body"></div>
+    </div>
+</div>
+<!-- loader END -->
+<div class="toast-container position-fixed end-0 p-3">
+    <div id="errorUpdateRole" class="toast align-items-center text-bg-danger-toast border-0 bg-transparency" role="alert"
+         aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body" th:text="#{global.toast.error}"></div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+        </div>
+    </div>
+</div>
+<div class="wrapper">
+    <section class="login-content">
+        <div class="row m-0 align-items-center bg-white" style="display: flex; justify-content: center;height: 100%">
+            <div class="col-md-6">
+                <div class="row justify-content-center">
+                    <div class="col-md-10">
+                        <div class="card card-transparent shadow-none d-flex justify-content-center mb-0 auth-card">
+                            <div class="card-body">
+                                <a href="#"
+                                   class="navbar-brand d-flex align-items-center mb-3">
+                                    <div class="logo-main">
+                                        <div class="logo-normal" style="display: flex; justify-content: center">
+                                            <img th:src="@{/assets/images/pages/logo.svg}" class="img-responsive"
+                                                 alt=""
+                                                 style="width: 100%;" id="logoImg">
+                                        </div>
+                                    </div>
+                                </a>
+                                <h2 class="mb-2 text-center">Sign Up</h2>
+                                <form id="registerForm">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label for="email" class="form-label">Lastname</label>
+                                                <input type="text" class="form-control" name="lastname" id="lastname"
+                                                       aria-describedby="email" placeholder=" ">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label for="email" class="form-label">Firstname</label>
+                                                <input type="text" class="form-control" name="firstname" id="firstname"
+                                                       aria-describedby="email" placeholder=" ">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label for="email" class="form-label">Surname</label>
+                                                <input type="text" class="form-control" name="surname" id="surname"
+                                                       aria-describedby="email" placeholder=" ">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label for="email" class="form-label">Email</label>
+                                                <input type="email" class="form-control" name="email" id="email"
+                                                       aria-describedby="email" placeholder=" ">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label for="password" class="form-label">Password</label>
+                                                <input type="password" class="form-control" name="password"
+                                                       id="password" aria-describedby="password" placeholder=" ">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label for="password" class="form-label">Confirm password</label>
+                                                <input type="password" class="form-control" name="confirmPassword"
+                                                       id="confirmPassword" aria-describedby="password" placeholder=" ">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-check form-check-inline" id="confirmResponse">
+                                                <input type="checkbox" class="form-check-input" id="confirm" name="confirm">
+                                                <label class="form-check-label pl-2" for="confirm">I agree with the <a th:href="@{/privacy-policy}">privacy policy</a></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-center">
+                                        <button type="button" class="btn btn-success" onclick="signUp()">Sign Up</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+<!-- Library Bundle Script -->
+<script th:src="@{/assets/js/core/libs.min.js}"></script>
+<script>
+    const inputs = document.querySelectorAll('.form-control');
+
+    inputs.forEach(input => {
+        input.addEventListener('input', event => {
+            let isInvalidLength = document.querySelectorAll('.is-invalid');
+            let invalidFeedbackLength = document.querySelectorAll('.invalid-feedback');
+            if (isInvalidLength.length>0||invalidFeedbackLength>0) {
+                const inputId = event.target.id;
+                clearSimpleValidMessages(inputId);
+            }
+        });
+    });
+
+    const checks = document.querySelectorAll('.form-check');
+
+    checks.forEach(input => {
+        input.addEventListener('change', event => {
+            let isInvalidLength = document.querySelectorAll('.is-invalid');
+            let invalidFeedbackLength = document.querySelectorAll('.invalid-feedback');
+            if (isInvalidLength.length>0||invalidFeedbackLength>0) {
+                const inputId = event.target.id;
+                clearSimpleValidMessages(inputId);
+            }
+        });
+    });
+
+    function clearSimpleValidMessages(id) {
+        let validId = id +'Valid'
+        $('#'+id).removeClass('is-invalid');
+        $('#'+validId).remove();
+    }
+</script>
+<script>
+    function clearValidMessages() {
+        $('.is-invalid').removeClass('is-invalid');
+        $('.invalid-feedback').remove();
+    }
+    function validResponse(divId, message, afterDiv) {
+
+        $(divId).addClass('is-invalid');
+        let validId = divId+'Valid';
+        if (afterDiv) {
+            $(divId).parents(afterDiv).append('<div class="invalid-feedback" id="'+validId+'">' + message + '</div>');
+        } else {
+            $(divId).after('<div class="invalid-feedback" id="'+validId+'">' + message + '</div>');
+        }
+    }
+    function signUp(){
+        var form = document.getElementById("registerForm");
+        var formData = new FormData(form);
+        var checkBox = document.getElementById("confirm");
+        formData.delete("confirm");
+        if (checkBox.checked){
+            formData.append("confirm",true);
+        }
+        else formData.append("confirm",false);
+        var jsonData = {};
+        formData.forEach((value, key) => {
+            jsonData[key] = value;
+        });
+        $.ajax({
+            method:"POST",
+            url: "/cabinet/register",
+            contentType: 'application/json',
+            data: JSON.stringify(jsonData)
+        }).done(
+            function (){
+                window.location.href = "/cabinet/login";
+            }
+        ).fail(
+            function(response){
+                clearValidMessages();
+                let errors = response.responseJSON;
+                for (var i =0; i<Object.keys(errors).length; i++){
+                    var keys = Object.keys(errors)[i];
+                    var values = Object.values(errors)[i];
+                    if (keys === "confirm"){
+                        validResponse("#" + keys, values, "#confirmResponse");
+                    }
+                    else {
+                        validResponse("#" + keys, values);
+                    }
+                }
+            }
+        )
+    }
+
+</script>
+</html>

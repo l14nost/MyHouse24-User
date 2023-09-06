@@ -39,7 +39,7 @@ public class User implements UserDetails {
     @Column(length = 100,nullable = false)
     private String email;
 
-    @Column(length = 20,nullable = false)
+    @Column(length = 20)
     private String number;
 
     @Column(length = 20,nullable = false)
@@ -58,7 +58,7 @@ public class User implements UserDetails {
     @Column(length = 150)
     private String filename;
 
-    @Column(nullable = false)
+    @Column
     private Instant date;
 
     @Column(nullable = false)
@@ -70,6 +70,12 @@ public class User implements UserDetails {
     @Column
     private Boolean theme;
 
+    @Column(length = 250)
+    private String forgotToken;
+
+    @Column
+    private Boolean forgotTokenUsage;
+
     @OneToMany(mappedBy = "user")
     private List<Apartment> apartmentList = new ArrayList<>();
 
@@ -78,6 +84,11 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user")
     private List<MastersApplication> applicationList = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "users",cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Message> messageList = new ArrayList<>();
+
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

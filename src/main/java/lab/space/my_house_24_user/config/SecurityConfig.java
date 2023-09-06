@@ -20,7 +20,7 @@ public class SecurityConfig {
                         .requestMatchers("/assets/css/**", "/assets/img/**",
                                 "/assets/js/**","/assets/vendor/**",
                                 "/assets/images/**","/auth/**",
-                                "/files/**","/login/**").permitAll()
+                                "/files/**","/login/**","/register/**", "/privacy-policy/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form

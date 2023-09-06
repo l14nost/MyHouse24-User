@@ -159,6 +159,15 @@
         }
     }
 
+    function passwordVisibilityForOneInput(id) {
+        var getPassword = document.getElementById(id);
+        if (getPassword.type === "password") {
+            getPassword.type = "text";
+        } else {
+            getPassword.type = "password";
+        }
+    }
+
     function generatePassword() {
         var chars = "0123456789abcdefghijklmnopqrstuvwxyz!@#$`~%^&*(*)ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         var passwordLength = 11;
@@ -351,8 +360,39 @@
         }
     });
 
-
     $(document).ready ( function(){
+
+        $.ajax({
+            url: "/cabinet/messages/get-message-for-header"
+        })
+            .done(function(response) {
+                console.log(response.length);
+                    if (response.length>0) {
+                        $("#countMessage").text(response.length)
+                    }
+                        $.each(response, function (index, entity) {
+                            let summaryContainer = document.getElementById("containerNewMessage");
+                            let newLi = document.createElement("a");
+                            newLi.classList.add("iq-sub-card")
+                            newLi.href = "/cabinet/messages/message-card/"+entity.id
+                            newLi.innerHTML = "<div class=\"d-flex align-items-center\" >\n" +
+                                "            <div class=\"ms-3 d-flex justify-content-between\" style='width: 100%'>\n" +
+                                "                <h6>"+entity.title+"</h6>\n" +
+                                "                                <i class=\"icon\">\n" +
+                                "                                    <svg class=\"icon-10\" xmlns=\"http://www.w3.org/2000/svg\" width=\"10\" viewBox=\"0 0 24 24\" fill=\"currentColor\">\n" +
+                                "                                        <g>\n" +
+                                "                                            <circle cx=\"12\" cy=\"12\" r=\"8\" fill=\"currentColor\"></circle>\n" +
+                                "                                        </g>\n" +
+                                "                                    </svg>\n" +
+                                "                                </i>\n" +
+                                "            </div>\n" +
+                                "        </div>"
+                            summaryContainer.appendChild(newLi);
+
+                        })
+
+                });
+
         function getTheme() {
             $.ajax({
                 url: "/cabinet/get-theme"

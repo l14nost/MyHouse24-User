@@ -29,6 +29,9 @@ public class ProfileController {
 
     @PutMapping("/edit")
     public ResponseEntity profileEdit(@ModelAttribute @Valid UserEditRequest userEditRequest, BindingResult result){
+        if (!userEditRequest.currentPassword().isEmpty()) {
+            userValidator.checkCurrentPassword(userEditRequest.currentPassword(), result, "UserEditRequest");
+        }
         if (userEditRequest.date()!=null) {
             userValidator.ageValid(userEditRequest.date(), result, "UserAddRequest");
         }
