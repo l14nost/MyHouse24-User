@@ -3,6 +3,7 @@ package lab.space.my_house_24_user.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -18,6 +19,10 @@ public class MvcConfig implements WebMvcConfigurer {
     @Value("${upload.path}")
     private String uploadPath;
 
+    @Bean
+    public RestTemplate getRestTemplate(){
+        return new RestTemplate();
+    }
     @Bean
     public LocaleResolver localeResolver(){
         SessionLocaleResolver sessionLocaleResolver = new SessionLocaleResolver();

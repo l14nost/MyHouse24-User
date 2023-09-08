@@ -15,22 +15,27 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequiredArgsConstructor
 public class RegisterController {
+
+    private final static String CAPTCHA_URL = "https://www.google.com/recaptcha/api/siteverify?secret=%s&response=%s";
 
     private final UserValidator userValidator;
     private final UserService userService;
 
 
     @GetMapping({"/register/", "/register"})
-    public String showLogin() {
-        return "/user/pages/auth/register";
+    public ModelAndView showLogin() {
+        return new ModelAndView("/user/pages/auth/register");
     }
 
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody @Valid RegisterRequest registerRequest, BindingResult result){
+
+
         if (!registerRequest.password().isEmpty() && !registerRequest.confirmPassword().isEmpty()) {
             userValidator.passwordMatch(registerRequest.password(), registerRequest.confirmPassword(), result, "UserEditRequest");
         }
@@ -47,8 +52,8 @@ public class RegisterController {
     }
 
     @GetMapping("/privacy-policy")
-    public String showPrivacy(){
-        return "/user/pages/auth/privacy-policy";
+    public ModelAndView showPrivacy(){
+        return new ModelAndView("/user/pages/auth/privacy-policy");
     }
 
 

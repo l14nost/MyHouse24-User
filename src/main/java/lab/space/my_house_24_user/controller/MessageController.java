@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -16,8 +17,8 @@ import java.util.List;
 public class MessageController {
     private final MessageService messageService;
     @GetMapping("")
-    public String messagePage(){
-        return "/user/pages/message/message-main";
+    public ModelAndView messagePage(){
+        return new ModelAndView("/user/pages/message/message-main");
     }
 
 
@@ -27,10 +28,11 @@ public class MessageController {
     }
 
     @GetMapping("/message-card/{id}")
-    public String messageCardPage(@PathVariable Long id, Model model){
-        model.addAttribute("id", id);
+    public ModelAndView messageCardPage(@PathVariable Long id){
+        ModelAndView modelAndView = new ModelAndView("/user/pages/message/message-card");
+        modelAndView.addObject("id", id);
         messageService.changeCheck(id);
-        return "/user/pages/message/message-card";
+        return modelAndView;
     }
 
     @GetMapping("/get-message-by-id/{id}")

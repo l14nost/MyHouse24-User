@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.Instant;
@@ -70,11 +71,12 @@ public class User implements UserDetails {
     @Column
     private Boolean theme;
 
-    @Column(length = 250)
-    private String forgotToken;
+    @Column(length = 250, name = "token")
+    private String token;
 
-    @Column
-    private Boolean forgotTokenUsage;
+    @Column(name = "token_usage")
+    private Boolean tokenUsage;
+
 
     @OneToMany(mappedBy = "user")
     private List<Apartment> apartmentList = new ArrayList<>();
@@ -92,7 +94,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return new ArrayList<>();
+        return List.of(new SimpleGrantedAuthority(userStatus.name()));
     }
 
     @Override

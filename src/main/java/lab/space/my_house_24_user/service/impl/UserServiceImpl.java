@@ -19,6 +19,7 @@ import lab.space.my_house_24_user.util.FileHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -30,6 +31,7 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -44,8 +46,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        System.out.println(username);
         User user = userRepository.findUserByEmail(username).orElseThrow(()->new EntityNotFoundException("User by email:"+username+" not found"));
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), new ArrayList<>());
+        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), user.getAuthorities());
+    }
+
+    @Override
+    public void processOAuthPostLogin(String username) {
+
     }
 
     @Override
@@ -56,7 +64,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public Long getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return userRepository.findUserByEmail(authentication.getName()).orElseThrow(() -> new EntityNotFoundException("User by email:"+authentication.getName()+" not found")).getId();
+            return userRepository.findUserByEmail(authentication.getName()).orElseThrow(() -> new EntityNotFoundException("User by email:" + authentication.getName() + " not found")).getId();
+
 
     }
 
@@ -117,7 +126,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         }
         userRepository.save(user);
         if (changeAuthenticate){
-            Authentication authentication = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword(),new ArrayList<>());
+            Authentication authentication = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword(),user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
 
@@ -143,8 +152,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public void sendForgotPasswordLetter(ForgotRequest forgotRequest) {
         User user = findUserByEmail(forgotRequest.email());
         String token = jwtService.generateToken(user);
-        user.setForgotToken(token);
-        user.setForgotTokenUsage(false);
+        user.setToken(token);
+        user.setTokenUsage(false);
         userRepository.save(user);
         customMailSender.send(user.getEmail(), url + "login/forgot-password/" + token, "Forgot Password");
     }
@@ -157,7 +166,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public void forgotPassword(ForgotPassRequest forgotPassRequest, String token) {
         User user = findUserByEmail(loadUserByToken(token).getUsername());
-        user.setForgotTokenUsage(true);
+        user.setTokenUsage(true);
         user.setPassword(passwordEncoder.encode(forgotPassRequest.password()));
         userRepository.save(user);
         String textForSend = "Dear " + user.getLastname() + " " + user.getFirstname() + ", your password has been changed!\n" +

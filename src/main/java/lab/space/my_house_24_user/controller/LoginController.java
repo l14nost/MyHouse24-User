@@ -1,6 +1,7 @@
 package lab.space.my_house_24_user.controller;
 
 import jakarta.validation.Valid;
+import lab.space.my_house_24_user.enums.UserStatus;
 import lab.space.my_house_24_user.model.auth.ForgotPassRequest;
 import lab.space.my_house_24_user.model.auth.ForgotRequest;
 import lab.space.my_house_24_user.service.JwtService;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,6 +20,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/login")
@@ -30,19 +35,19 @@ public class LoginController {
 
 
     @GetMapping({"", "/"})
-    public String showLogin() {
+    public ModelAndView showLogin() {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
-        if (authentication.isAuthenticated() && authentication.getPrincipal() instanceof User){
-            return "redirect:/index";
+        if (authentication.isAuthenticated() && authentication.getPrincipal() instanceof User && authentication.getAuthorities().equals(List.of(new SimpleGrantedAuthority(UserStatus.ACTIVE.name())))){
+            return new ModelAndView("redirect:/index");
         }else {
-            return "/user/pages/auth/login";
+            return new ModelAndView("/user/pages/auth/login");
         }
     }
 
 
     @GetMapping({"/forgot-password-send"})
-    public String showForgot() {
-        return "/user/pages/auth/forgot-password";
+    public ModelAndView showForgot() {
+        return new ModelAndView("/user/pages/auth/forgot-password");
     }
 
     @PostMapping("/forgot-password-send")
@@ -59,16 +64,17 @@ public class LoginController {
     }
 
     @GetMapping("/forgot-password/{token}")
-    public String showForgotPasswordChangePage(@PathVariable String token, Model model) {
+    public ModelAndView showForgotPasswordChangePage(@PathVariable String token) {
         UserDetails userDetails = userService.loadUserByToken(token);
         if (!jwtService.isTokenValid(
                 token,
                 userDetails,
                 userService.findUserByEmail(userDetails.getUsername()))) {
-            return "/user/pages/auth/new-password-error";
+            return new ModelAndView("/user/pages/auth/new-password-error");
         } else {
-            model.addAttribute("token", token);
-            return "/user/pages/auth/new-password";
+            ModelAndView modelAndView = new ModelAndView("/user/pages/auth/new-password");
+            modelAndView.addObject("token", token);
+            return modelAndView;
         }
     }
 

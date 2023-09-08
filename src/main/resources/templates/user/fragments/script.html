@@ -370,6 +370,17 @@
                     if (response.length>0) {
                         $("#countMessage").text(response.length)
                     }
+                    else {
+                        let summaryContainer = document.getElementById("containerNewMessage");
+                        let newLi = document.createElement("a");
+                        newLi.classList.add("iq-sub-card")
+                        newLi.innerHTML = "<div class=\"d-flex align-items-center\" >\n" +
+                            "            <div class=\"ms-3 text-center\" style='width: 100%'>\n" +
+                            "                <h6>"+"[[#{table.empty}]]"+"</h6>\n" +
+                            "            </div>\n" +
+                            "        </div>"
+                        summaryContainer.appendChild(newLi);
+                    }
                         $.each(response, function (index, entity) {
                             let summaryContainer = document.getElementById("containerNewMessage");
                             let newLi = document.createElement("a");

@@ -41,8 +41,8 @@ public class JwtServiceImpl implements JwtService {
     public boolean isTokenValid(String token, UserDetails userDetails, User user) {
         try {
             JWT.require(getSignInAlgorithm()).withSubject(userDetails.getUsername()).build().verify(token);
-            if (user.getForgotToken().equals(token)) {
-                return !user.getForgotTokenUsage();
+            if (user.getToken().equals(token)) {
+                return !user.getTokenUsage();
             }
             return false;
 

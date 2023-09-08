@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequiredArgsConstructor
@@ -21,9 +22,10 @@ public class ProfileController {
     private final UserValidator userValidator;
 
     @GetMapping("/edit")
-    public String profileEditPage(Model model){
-        model.addAttribute("user", userService.findUserForEdit());
-        return "/user/pages/profile/profile-edit";
+    public ModelAndView profileEditPage(){
+        ModelAndView model = new ModelAndView("/user/pages/profile/profile-edit");
+        model.addObject("user", userService.findUserForEdit());
+        return model;
     }
 
 
@@ -49,8 +51,8 @@ public class ProfileController {
     }
 
     @GetMapping({"","/"})
-    public String profilePage(){
-        return "/user/pages/profile/profile-main";
+    public ModelAndView profilePage(){
+        return new ModelAndView("/user/pages/profile/profile-main");
     }
 
 }
