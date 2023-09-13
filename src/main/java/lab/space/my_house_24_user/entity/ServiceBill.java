@@ -23,6 +23,9 @@ public class ServiceBill {
     private Long count;
 
     @Column(nullable = false)
+    private BigDecimal price;
+
+    @Column(nullable = false)
     private BigDecimal totalPrice;
 
     @ManyToOne

@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -23,10 +25,19 @@ public class BankBook {
     @Column(length = 20, nullable = false)
     private String number;
 
+    @Column(nullable = false)
+    private BigDecimal totalPrice;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "status", length = 50, nullable = false)
     private BankBookStatus bankBookStatus;
 
     @OneToOne
     private Apartment apartment;
+
+    @OneToMany(mappedBy = "bankBook", cascade = CascadeType.ALL)
+    private List<Bill> bill = new ArrayList<>();
+
+    @OneToMany(mappedBy = "bankBook")
+    private List<CashBox> cashBoxes = new ArrayList<>();
 }

@@ -11,11 +11,11 @@
     <div class="card">
       <div class="card-header d-flex justify-content-between">
         <div class="header-title">
-          <h4 class="card-title" th:text = "#{left.sidebar.summary}"></h4>
+          <h4 class="card-title" id="title"></h4>
         </div>
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a th:text = "#{left.sidebar.summary}"></a></li>
+            <li class="breadcrumb-item"><a id="breadcrumb"></a></li>
           </ol>
         </nav>
       </div>
@@ -33,7 +33,7 @@
             </svg>
           </div>
           <div class="text-end">
-            <h2 class="counter" style="visibility: visible;"></h2>
+            <h2 class="counter" style="visibility: visible;" id="balance"></h2>
             <p th:text = "#{statistics.balance.by.apartment}"></p>
           </div>
         </div>
@@ -50,7 +50,7 @@
             </svg>
           </div>
           <div class="text-end">
-            <h2 class="counter" style="visibility: visible;" th:text="${bankBook}"></h2>
+            <h2 class="counter" style="visibility: visible;" id="bankBookNumber"></h2>
             <p th:text = "#{statistics.bank.book}"></p>
           </div>
         </div>
@@ -67,7 +67,7 @@
             </svg>
           </div>
           <div class="text-end">
-            <h2 class="counter" style="visibility: visible;"></h2>
+            <h2 class="counter" style="visibility: visible;" id="averageCost"></h2>
             <p th:text = "#{statistics.average.cost}"></p>
           </div>
         </div>
@@ -140,120 +140,129 @@
 
 <th:block layout:fragment="extra-script">
   <script>
-    if($('#extrachart3').length) {
-      var options = {
-        series: [44, 55, 41, 17, 15],
-        chart: {
-          type: 'donut',
-        },
-        title: {
-          text: '[[#{statistics.previous.month}]]',
-          align: 'center'
-        },
-        responsive: [{
-          breakpoint: 480,
-          options: {
-            chart: {
-              width: 200
-            },
-            legend: {
-              position: 'top'
-            }
-          }
-        }]
-      };
+    $(document).ready(function (){
+      $.ajax({
+        url: "/cabinet/statistic/get-summary-by-id/"+[[${id}]],
+      })
+              .done(function (response){
+                $("#title").text("[[#{left.sidebar.summary}]]"+" - "+response.title);
+                $("#breadcrumb").text("[[#{left.sidebar.summary}]]"+" - "+response.title);
+                $("#balance").text(response.balance);
+                $("#bankBookNumber").text(response.bankBook);
+                $("#averageCost").text(response.averageCost);
+                if($('#extrachart5').length) {
+                  const options = {
+                    series: [ {
+                      name: '[[#{statistics.cost}]]',
+                      data: response.costByMonth
+                    }],
+                    chart: {
+                      type: 'bar',
+                      height: 350
+                    },
+                    plotOptions: {
+                      bar: {
+                        borderRadius: 5,
+                        horizontal: false,
+                        columnWidth: '55%',
+                        endingShape: 'rounded'
+                      },
+                    },
+                    dataLabels: {
+                      enabled: false
+                    },
+                    stroke: {
+                      show: true,
+                      width: 2,
+                      colors: ['transparent']
+                    },
+                    xaxis: {
+                      categories: ['[[#{statistics.chart.Jan}]]', '[[#{statistics.chart.Feb}]]', '[[#{statistics.chart.Mar}]]', '[[#{statistics.chart.Apr}]]', '[[#{statistics.chart.May}]]', '[[#{statistics.chart.Jun}]]', '[[#{statistics.chart.Jul}]]', '[[#{statistics.chart.Aug}]]', '[[#{statistics.chart.Sep}]]', '[[#{statistics.chart.Oct}]]', '[[#{statistics.chart.Nov}]]', '[[#{statistics.chart.Dec}]]'],
+                    },
+                    fill: {
+                      opacity: 1,
 
-      var chart = new ApexCharts(document.querySelector("#extrachart3"), options);
-      chart.render();
-    }
-  </script>
-  <script>
-    if ($('#extrachart4').length) {
-      var options = {
-        series: [44, 55, 41, 17, 15],
-        chart: {
-          type: 'donut',
-        },
-        title: {
-          text: '[[#{statistics.current.year}]]',
-          align: 'center'
-        },
-        responsive: [{
-          breakpoint: 480,
-          options: {
-            chart: {
-              width: 200,
-            },
-            legend: {
-              show: false,
-            },
-          },
-        }],
-      };
+                      colors:['#162b9b']
 
-      var chart = new ApexCharts(document.querySelector("#extrachart4"), options);
-      chart.render();
-    }
-  </script>
+                    },
+                    legend:{
+                      labels:{
+                        colors:['#162b9b']
+                      },
+                      markers: {
+                        width: 100,
+                        fillColors:['#162b9b']
+                      },
+                    },
 
-  <script>
-    if($('#extrachart5').length) {
-      const options = {
-        series: [ {
-          name: '[[#{statistics.cost}]]',
-          data: [35, 41, 36, 26, 45, 48, 52, 53, 41, 52, 53, 41]
-        }],
-        chart: {
-          type: 'bar',
-          height: 350
-        },
-        plotOptions: {
-          bar: {
-            borderRadius: 5,
-            horizontal: false,
-            columnWidth: '55%',
-            endingShape: 'rounded'
-          },
-        },
-        dataLabels: {
-          enabled: false
-        },
-        stroke: {
-          show: true,
-          width: 2,
-          colors: ['transparent']
-        },
-        xaxis: {
-          categories: ['[[#{statistics.chart.Jan}]]', '[[#{statistics.chart.Feb}]]', '[[#{statistics.chart.Mar}]]', '[[#{statistics.chart.Apr}]]', '[[#{statistics.chart.May}]]', '[[#{statistics.chart.Jun}]]', '[[#{statistics.chart.Jul}]]', '[[#{statistics.chart.Aug}]]', '[[#{statistics.chart.Sep}]]', '[[#{statistics.chart.Oct}]]', '[[#{statistics.chart.Nov}]]', '[[#{statistics.chart.Dec}]]'],
-        },
-        fill: {
-          opacity: 1,
+                    tooltip: {
+                      y: {
+                        formatter: function (val) {
+                          return "₴ " + val
+                        }
+                      }
+                    }
+                  };
 
-          colors:['#162b9b']
+                  const chart = new ApexCharts(document.querySelector("#extrachart5"), options);
+                  chart.render();
+                }
+                if($('#extrachart3').length) {
+                  var options = {
+                    series: response.costChartMonthResponse.count,
+                    labels: response.costChartMonthResponse.legend,
+                    chart: {
+                      type: 'donut',
+                    },
+                    title: {
+                      text: '[[#{statistics.previous.month}]]',
+                      align: 'center'
+                    },
+                    responsive: [{
+                      breakpoint: 480,
+                      options: {
+                        chart: {
+                          width: 200
+                        },
+                        legend: {
+                          position: 'top'
+                        }
+                      }
+                    }]
+                  };
 
-        },
-        legend:{
-          labels:{
-            colors:['#162b9b']
-          },
-          markers: {
-            width: 100,
-            fillColors:['#162b9b']
-          },
-        },
+                  var chart = new ApexCharts(document.querySelector("#extrachart3"), options);
+                  chart.render();
+                }
+                if ($('#extrachart4').length) {
+                  var options = {
+                    series: response.costChartYearResponse.count,
+                    labels: response.costChartYearResponse.legend,
+                    chart: {
+                      type: 'donut',
+                    },
+                    title: {
+                      text: '[[#{statistics.current.year}]]',
+                      align: 'center'
+                    },
+                    responsive: [{
+                      breakpoint: 480,
+                      options: {
+                        chart: {
+                          width: 200,
+                        },
+                        legend: {
+                          show: false,
+                        },
+                      },
+                    }],
+                  };
 
-        tooltip: {
-          y: {
-            formatter: function (val) {
-              return "₴ " + val
-            }
-          }
-        }
-      };
-
-      const chart = new ApexCharts(document.querySelector("#extrachart5"), options);
-      chart.render();
-    }
+                  var chart = new ApexCharts(document.querySelector("#extrachart4"), options);
+                  chart.render();
+                }
+              })
+    })
   </script>
   <!-- put JS here for only this page -->
 

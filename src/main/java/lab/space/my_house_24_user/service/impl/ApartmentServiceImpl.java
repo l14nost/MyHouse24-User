@@ -13,16 +13,7 @@ public class ApartmentServiceImpl implements ApartmentService {
     private final ApartmentRepository apartmentRepository;
     @Override
     public Apartment findById(Long id) {
-        return apartmentRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("Apartment by id "+id+" not found"));
-    }
-
-    @Override
-    public String bankBookByApartment(Long id) {
-        Apartment apartment = findById(id);
-        if (apartment.getBankBook()!=null) {
-            return apartment.getBankBook().getNumber();
-        }
-        return "-";
+        return apartmentRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Apartment by id " + id + " not found"));
     }
 
 }

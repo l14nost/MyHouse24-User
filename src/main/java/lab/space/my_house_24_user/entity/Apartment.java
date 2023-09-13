@@ -54,8 +54,6 @@ public class Apartment {
     @OneToMany(mappedBy = "apartment")
     private List<MastersApplication> mastersApplicationList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "apartment", cascade = CascadeType.ALL)
-    private List<Bill> bill = new ArrayList<>();
 
     @OneToMany(mappedBy = "apartment")
     private List<MeterReading> meterReadingList = new ArrayList<>();

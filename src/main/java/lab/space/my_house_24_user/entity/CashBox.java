@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "cash_box")
@@ -20,31 +21,42 @@ public class CashBox {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
+    private LocalDateTime createAt;
+
     @Column(length = 20, nullable = false)
     private String number;
 
-    @Column(length = 1000, nullable = false)
-    private String comment;
+    @Column(nullable = false)
+    private Boolean draft;
 
     @Column(nullable = false)
     private Boolean type;
 
     @Column(nullable = false)
-    private Boolean held;
+    private Boolean isActive;
 
     @Column(nullable = false)
-    private Instant date;
+    private BigDecimal price;
 
     @Column(nullable = false)
-    private BigDecimal sum;
+    private BigDecimal historyMoneyUsed;
+
+    @Column(nullable = false)
+    private BigDecimal moneyUsed;
+
+    @Column(length = 1000)
+    private String comment;
 
     @ManyToOne
+    @JoinColumn(name = "staff_id", nullable = false)
     private Staff staff;
 
     @ManyToOne
+    @JoinColumn(name = "article_id", nullable = false)
     private Article articles;
 
     @ManyToOne
-    private User user;
+    private BankBook bankBook;
 
 }
