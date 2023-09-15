@@ -15,7 +15,6 @@ import java.util.Optional;
 
 public interface UserService {
 
-    void processOAuthPostLogin(String username);
     User findUserByEmail(String email);
     Long getCurrentUser();
 

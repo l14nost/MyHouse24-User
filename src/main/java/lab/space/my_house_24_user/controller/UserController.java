@@ -1,5 +1,6 @@
 package lab.space.my_house_24_user.controller;
 
+import jakarta.persistence.EntityNotFoundException;
 import lab.space.my_house_24_user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +17,21 @@ public class UserController {
 
     @GetMapping("/get-current-user")
     public ResponseEntity getCurrentUser(){
-        return ResponseEntity.ok(userService.getUserForSidebar());
+        try {
+            return ResponseEntity.ok(userService.getUserForSidebar());
+        }
+        catch (EntityNotFoundException e){
+            return ResponseEntity.badRequest().body("User not found");
+        }
     }
 
     @GetMapping("/get-user-profile")
     public ResponseEntity getUserProfile(){
-        return ResponseEntity.ok(userService.findUserForProfile());
+        try {
+            return ResponseEntity.ok(userService.findUserForProfile());
+        }
+        catch (EntityNotFoundException e){
+            return ResponseEntity.badRequest().body("User not found");
+        }
     }
 }

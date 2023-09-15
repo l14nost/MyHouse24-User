@@ -21,7 +21,6 @@ import org.springframework.web.servlet.ModelAndView;
 @RequiredArgsConstructor
 public class RegisterController {
 
-    private final static String CAPTCHA_URL = "https://www.google.com/recaptcha/api/siteverify?secret=%s&response=%s";
 
     private final UserValidator userValidator;
     private final UserService userService;
@@ -34,8 +33,6 @@ public class RegisterController {
 
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody @Valid RegisterRequest registerRequest, BindingResult result){
-
-
         if (!registerRequest.password().isEmpty() && !registerRequest.confirmPassword().isEmpty()) {
             userValidator.passwordMatch(registerRequest.password(), registerRequest.confirmPassword(), result, "UserEditRequest");
         }
@@ -44,7 +41,6 @@ public class RegisterController {
         }
         userValidator.checkConfirm(registerRequest.confirm(), result, "UserAddRequest");
         if (result.hasErrors()){
-            System.out.println(result.getAllErrors());
             return ResponseEntity.badRequest().body(ErrorMapper.mapErrors(result));
         }
         userService.register(registerRequest);

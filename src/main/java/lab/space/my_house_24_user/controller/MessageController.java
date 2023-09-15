@@ -1,5 +1,6 @@
 package lab.space.my_house_24_user.controller;
 
+import jakarta.persistence.EntityNotFoundException;
 import lab.space.my_house_24_user.model.message.MessageMainPageRequest;
 import lab.space.my_house_24_user.service.MessageService;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +38,12 @@ public class MessageController {
 
     @GetMapping("/get-message-by-id/{id}")
     public ResponseEntity getMessageById(@PathVariable Long id){
-        return ResponseEntity.ok().body(messageService.findByIdForCard(id));
+        try {
+            return ResponseEntity.ok().body(messageService.findByIdForCard(id));
+        }
+        catch (EntityNotFoundException e){
+            return ResponseEntity.badRequest().body("Message not found");
+        }
     }
 
 

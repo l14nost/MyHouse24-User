@@ -8,6 +8,7 @@ import lab.space.my_house_24_user.model.summary.SummaryResponse;
 import lab.space.my_house_24_user.service.ApartmentService;
 import lab.space.my_house_24_user.service.SummaryService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -20,10 +21,12 @@ import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class SummaryServiceImpl implements SummaryService {
     private final ApartmentService apartmentService;
     @Override
     public SummaryResponse summaryByApartment(Long id) {
+        log.info("Try to get summary by apartment: "+id);
         String bankBook = "-";
         BigDecimal balance = BigDecimal.ZERO;
         BigDecimal averageCost = BigDecimal.ZERO;
@@ -51,6 +54,7 @@ public class SummaryServiceImpl implements SummaryService {
     }
 
     private BigDecimal calculateAverage(List<Bill> bills){
+        log.info("Try to calculate average cost");
         BigDecimal averageCost = BigDecimal.ZERO;
         List<BigDecimal> costByMonth = new ArrayList<>();
         for (int i = 0; i<bills.size();i++){
@@ -73,6 +77,7 @@ public class SummaryServiceImpl implements SummaryService {
     }
 
     private List<BigDecimal> calculateCostByMonth(List<Bill> bills){
+        log.info("Try to calculate cost by month for 3 chart");
         List<BigDecimal> costByMonth = new ArrayList<>();
         for (int i = 1; i<13;i++){
             BigDecimal cost = BigDecimal.ZERO;
@@ -87,12 +92,10 @@ public class SummaryServiceImpl implements SummaryService {
     }
 
     private CostChartResponse calculateCostChartForPreviousMonth(List<Bill> billList){
-        int month = LocalDateTime.now().getMonthValue()-1;
-        int year = LocalDateTime.now().getYear();
-        if (month == 0){
-            month = 12;
-            year -= 1 ;
-        }
+        log.info("Try to calculate cost by previous month for 1 chart");
+        LocalDateTime localDateTime = LocalDateTime.now().minusMonths(1);
+        int month = localDateTime.getMonthValue();
+        int year = localDateTime.getYear();
         List<ServiceBill> serviceBillList = new ArrayList<>();
         for (Bill bill:billList){
             if (bill.getPeriodOf().getYear() == year && bill.getPeriodOf().getMonthValue() == month){
@@ -121,6 +124,7 @@ public class SummaryServiceImpl implements SummaryService {
 
 
     private CostChartResponse calculateCostChartForYear(List<Bill> billList){
+        log.info("Try to calculate cost by year for 2 chart");
         int year = LocalDateTime.now().getYear();
         List<ServiceBill> serviceBillList = new ArrayList<>();
         for (Bill bill:billList){

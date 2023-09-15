@@ -19,10 +19,6 @@ import org.springframework.web.servlet.ModelAndView;
 public class SummaryController {
     private final SummaryService summaryService;
 
-    @GetMapping("/test-summary")
-    public ModelAndView testSummary(){
-        return new ModelAndView("/user/pages/statistic/statistic");
-    }
 
 
     @GetMapping("/summary/{id}")

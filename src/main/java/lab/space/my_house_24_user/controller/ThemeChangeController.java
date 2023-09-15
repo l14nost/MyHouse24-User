@@ -1,5 +1,6 @@
 package lab.space.my_house_24_user.controller;
 
+import jakarta.persistence.EntityNotFoundException;
 import lab.space.my_house_24_user.entity.User;
 import lab.space.my_house_24_user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -16,8 +17,14 @@ public class ThemeChangeController {
 
     @GetMapping("/get-theme")
     public ResponseEntity getTheme(){
-        User user = userService.findById(userService.getCurrentUser());
-        return ResponseEntity.ok(user.getTheme());
+        try {
+            User user = userService.findById(userService.getCurrentUser());
+            return ResponseEntity.ok(user.getTheme());
+        }
+        catch (EntityNotFoundException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
     }
 
     @PostMapping("/change-theme")
