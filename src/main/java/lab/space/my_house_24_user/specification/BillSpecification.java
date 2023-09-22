@@ -39,9 +39,9 @@ public class BillSpecification {
                         criteriaBuilder.equal(formattedDateTime, request.dateQuery())
                 ));
             }
-            if (nonNull(request.billStatusQuery())) {
+            if (nonNull(request.statusQuery())) {
                 predicates.add(criteriaBuilder.or(
-                        criteriaBuilder.equal(root.get("status"), request.billStatusQuery())
+                        criteriaBuilder.equal(root.get("status"), request.statusQuery())
                 ));
             }
             if (nonNull(request.payedQuery()) && !Objects.equals(request.payedQuery(), "")) {

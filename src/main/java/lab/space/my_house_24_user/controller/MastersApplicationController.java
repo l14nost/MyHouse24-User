@@ -43,11 +43,6 @@ public class MastersApplicationController {
         return ResponseEntity.ok(mastersApplicationService.getAllTypeMaster());
     }
 
-    @GetMapping("/get-all-status")
-    public ResponseEntity<List<EnumResponse>> getAllStatus() {
-        return ResponseEntity.ok(mastersApplicationService.getAllMastersApplicationStatus());
-    }
-
     @GetMapping("/get-all-apartment")
     public ResponseEntity<List<ApartmentResponseForSidebar>> getAllApartment() {
         return ResponseEntity.ok(apartmentService.getAllApartmentResponse());

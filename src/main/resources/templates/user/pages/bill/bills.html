@@ -135,7 +135,6 @@
         url: "/cabinet/get-apartment-" + id,
         contentType: 'application/json',
       }).done(function (response) {
-        console.info(response)
         $("#breadcrumb").append(addBreadcrumbTitle('[[#{bills.breadcrumb}]] - ' + response?.fullName));
       });
     }
@@ -148,7 +147,6 @@
         contentType: 'application/json',
         data: JSON.stringify(billRequest)
       }).done(function (response) {
-        console.info(response)
         const TABLE_BODY = createTable('#bills-table', response?.totalElements, response?.totalPages, billRequest?.pageIndex);
         $.each(response?.content, function (index, bill) {
           $(TABLE_BODY).append(
@@ -164,9 +162,30 @@
       });
     }
 
+    $('#status').select2({
+      theme: 'bootstrap-5',
+      minimumResultsForSearch: -1,
+      ajax: {
+        method: 'GET',
+        url: '/cabinet/get-all-bill-status',
+        cache: true,
+        delay: 1000,
+        processResults: function (data) {
+          return {
+            results: data.map(function (item) {
+              return {
+                id: item.name,
+                text: item.value
+              };
+            })
+          };
+        }
+      }
+    });
+
     function clearInput() {
-      $('#search td select').val('').trigger('change');
-      $('#search td select option').remove();
+      $('#search th select').val('').trigger('change');
+      $('#search th select option').remove();
       $('#search input').val('');
       updateBillRequestAndSend();
       showToast('success');
@@ -180,7 +199,6 @@
       }
       billRequest.payedQuery = $('#payed').val();
       billRequest.priceQuery = $('#sum').val();
-      console.log(billRequest)
       billRequest.pageIndex = 0;
       getAllBill();
     }

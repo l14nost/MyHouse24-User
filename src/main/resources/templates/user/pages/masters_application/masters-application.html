@@ -110,7 +110,6 @@
         contentType: 'application/json',
         data: JSON.stringify(mastersRequest)
       }).done(function (response) {
-        console.info(response)
         const TABLE_BODY = createTable('#masters-appl-table', response?.totalElements, response?.totalPages, mastersRequest?.pageIndex);
         $.each(response?.content, function (index, mastersAppl) {
           const $deleteBtn = '<a class="btn btn-sm btn-icon text-danger" type="button" data-status="'+ mastersAppl?.status.name +'" data-bs-toggle="tooltip" aria-label="Delete Staff" data-bs-original-title="Delete Staff" data-toggle="modal" data-target="#confirmDelete" data-id="' + mastersAppl.id + '">' +

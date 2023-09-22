@@ -105,11 +105,6 @@
 <th:block layout:fragment="extra-script">
 
     <script>
-        let apartmentId = undefined;
-
-        $(document).ready(function () {
-        });
-
         function saveMastersApplication() {
             let mastersApplicationRequest = {
                 description: undefined,
@@ -123,7 +118,6 @@
             if ($("#date").val() !== '') mastersApplicationRequest.date = getTrueDate($("#date").val());
             if ($("#time").val() !== '') mastersApplicationRequest.time = $("#time").val();
             if ($("#apartment").val() !== '') mastersApplicationRequest.apartmentId = $("#apartment").val();
-            console.log(mastersApplicationRequest);
             $.ajax({
                 method: "POST",
                 url: '/cabinet/masters-applications/save-master-call',

@@ -4,6 +4,7 @@ package lab.space.my_house_24_user.controller;
 import jakarta.persistence.EntityNotFoundException;
 import lab.space.my_house_24_user.model.bill.BillRequest;
 import lab.space.my_house_24_user.model.bill.BillResponse;
+import lab.space.my_house_24_user.model.enums_response.EnumResponse;
 import lab.space.my_house_24_user.service.ApartmentService;
 import lab.space.my_house_24_user.service.BillService;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -36,6 +39,11 @@ public class BillController {
     @GetMapping("bill-{id}")
     public ModelAndView showBillByIdPage(@PathVariable Long id){
         return new ModelAndView("user/pages/bill/bill-card");
+    }
+
+    @GetMapping("/get-all-bill-status")
+    public ResponseEntity<List<EnumResponse>> getAllTypeMaster() {
+        return ResponseEntity.ok(billService.getAllBillStatus());
     }
 
     @GetMapping("get-bill-{billId}")

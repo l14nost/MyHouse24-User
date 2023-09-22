@@ -69,7 +69,6 @@
         url: "/cabinet/get-rate-by-" + id,
         dataType: 'json'
       }).done(function (response) {
-        console.log(response)
         const SERVICE_BODY = createTableService('#service-table', response?.rate.priceRates.length)
         $.each(response?.rate?.priceRates, function (index, priceRate) {
           $(SERVICE_BODY).append(

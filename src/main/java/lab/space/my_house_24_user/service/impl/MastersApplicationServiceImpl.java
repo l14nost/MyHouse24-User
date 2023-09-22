@@ -45,13 +45,13 @@ public class MastersApplicationServiceImpl implements MastersApplicationService 
 
     @Override
     public MastersApplicationResponse getMastersApplicationResponse(Long id) throws EntityNotFoundException {
-        log.info("Try to get MastersApplication");
+        log.info("Try to convert in MastersApplicationResponse");
         return MastersApplicationMapper.toMastersApplicationResponse(getMastersApplicationById(id));
     }
 
     @Override
     public Page<MastersApplicationResponse> getAllMastersApplicationByRequest(MastersApplicationRequest request) {
-        log.info("Try to get MastersApplication");
+        log.info("Try to get All MastersApplication by Request");
         return mastersApplicationRepository
                 .findAll(
                         specification.getMastersApplicationByUserEmail(SecurityContextHolder.getContext().getAuthentication().getName()),
@@ -61,7 +61,7 @@ public class MastersApplicationServiceImpl implements MastersApplicationService 
 
     @Override
     public List<EnumResponse> getAllMastersApplicationStatus() {
-        log.info("Try to get MastersApplication");
+        log.info("Try to get MastersApplicationStatus");
         return Arrays.stream(MastersApplicationStatus.values())
                 .map(status -> EnumMapper.toSimpleDto(
                                 status.name(),

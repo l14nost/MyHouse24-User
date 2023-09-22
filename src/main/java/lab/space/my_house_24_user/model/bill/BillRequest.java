@@ -11,7 +11,7 @@ public record BillRequest(
 
         String dateQuery,
 
-        BillStatus billStatusQuery,
+        BillStatus statusQuery,
 
         String payedQuery,
 
