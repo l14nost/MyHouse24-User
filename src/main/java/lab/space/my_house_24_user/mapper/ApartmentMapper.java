@@ -1,6 +1,7 @@
 package lab.space.my_house_24_user.mapper;
 
 import lab.space.my_house_24_user.entity.Apartment;
+import lab.space.my_house_24_user.model.apartment.ApartmentResponseForRate;
 import lab.space.my_house_24_user.model.apartment.ApartmentResponseForProfile;
 import lab.space.my_house_24_user.model.apartment.ApartmentResponseForSidebar;
 
@@ -31,6 +32,14 @@ public class ApartmentMapper {
                 .image3(apartment.getHouse().getImage3())
                 .image4(apartment.getHouse().getImage4())
                 .image5(apartment.getHouse().getImage5())
+                .build();
+    }
+
+    public static ApartmentResponseForRate toApartmentForRate(Apartment apartment){
+        return ApartmentResponseForRate.builder()
+                .id(apartment.getId())
+                .fullName(apartment.getHouse().getName()+", №"+apartment.getNumber())
+                .rate(RateMapper.toRateResponse(apartment.getRate()))
                 .build();
     }
 }

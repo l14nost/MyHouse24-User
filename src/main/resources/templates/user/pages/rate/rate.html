@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{user/fragments/layout}">
+
+<head>
+  <title th:text="#{rates.breadcrumb.rate}"></title>
+</head>
+
+<th:block layout:fragment="content">
+
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card-header d-flex justify-content-between">
+        <div class="header-title">
+          <h4 class="card-title" th:text="#{rates.breadcrumb.rate}"></h4>
+        </div>
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb" id="breadcrumb">
+            <li class="breadcrumb-item"><a th:text = "#{global.breadcrumb.main}"></a></li>
+          </ol>
+        </nav>
+      </div>
+      <div class="card-body px-0">
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="table-responsive">
+        <table class="table  table-hover table-bordered mx-0" style="max-width: 100%" id="service-table">
+          <thead>
+          <tr>
+            <th th:text = "#{rates.service}"></th>
+            <th th:text = "#{rates.unit}"></th>
+            <th th:text = "#{rates.price_per_unit}"></th>
+          </tr>
+          </thead>
+          <tbody>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</th:block>
+
+<!-- Extra Modals -->
+<th:block layout:fragment="extra-modals">
+
+  <!-- put extra modals here for only this page -->
+
+</th:block>
+
+<th:block layout:fragment="extra-script">
+
+  <script>
+    let apartmentId = undefined;
+
+    $(document).ready(function () {
+      apartmentId = new URL(window.location.href).pathname.split("-").pop()
+      getBillResponse(apartmentId);
+    });
+
+    function getBillResponse(id) {
+      $.ajax({
+        method: "GET",
+        url: "/cabinet/get-rate-by-" + id,
+        dataType: 'json'
+      }).done(function (response) {
+        console.log(response)
+        const SERVICE_BODY = createTableService('#service-table', response?.rate.priceRates.length)
+        $.each(response?.rate?.priceRates, function (index, priceRate) {
+          $(SERVICE_BODY).append(
+                  '<tr>' +
+                  '    <td>' + priceRate?.service?.name + '</td>' +
+                  '    <td>' + priceRate?.service?.unit?.name + '</td>' +
+                  '    <td>' + priceRate?.price.toFixed(2) + '</td>' +
+                  '</tr>'
+          );
+        });
+
+        $("#breadcrumb").append(addBreadcrumbTitle('[[#{rates.breadcrumb.rate}]] - ' + response?.fullName));
+      }).fail(function (){
+        window.location.href = "/admin/error";
+      });
+    }
+
+    function createTableService(tableSelector, itemsCount) {
+      const TABLE_DIV = $(tableSelector);
+      const TABLE_HEAD = $(TABLE_DIV).find('thead');
+      const TABLE_BODY = $(TABLE_DIV).find('tbody');
+      const TABLE_COLUMNS_COUNT = $(TABLE_HEAD).find('th').length;
+
+      $(TABLE_BODY).empty();
+      if (itemsCount <= 0) {
+        $(TABLE_BODY).append(
+                '<tr>' +
+                '    <td colspan="' + TABLE_COLUMNS_COUNT + '" class="align-middle text-center no-data">' +
+                '[[#{table.empty}]]' +
+                '    </td>' +
+                '</tr>'
+        );
+      }
+
+      return TABLE_BODY;
+    }
+  </script>
+
+</th:block>
+
+</html>
