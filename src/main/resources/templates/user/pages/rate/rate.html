@@ -86,26 +86,6 @@
         window.location.href = "/cabinet/error";
       });
     }
-
-    function createTableService(tableSelector, itemsCount) {
-      const TABLE_DIV = $(tableSelector);
-      const TABLE_HEAD = $(TABLE_DIV).find('thead');
-      const TABLE_BODY = $(TABLE_DIV).find('tbody');
-      const TABLE_COLUMNS_COUNT = $(TABLE_HEAD).find('th').length;
-
-      $(TABLE_BODY).empty();
-      if (itemsCount <= 0) {
-        $(TABLE_BODY).append(
-                '<tr>' +
-                '    <td colspan="' + TABLE_COLUMNS_COUNT + '" class="align-middle text-center no-data">' +
-                '[[#{table.empty}]]' +
-                '    </td>' +
-                '</tr>'
-        );
-      }
-
-      return TABLE_BODY;
-    }
   </script>
 
 </th:block>
