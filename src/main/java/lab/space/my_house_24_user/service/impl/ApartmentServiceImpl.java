@@ -52,4 +52,10 @@ public class ApartmentServiceImpl implements ApartmentService {
         return ApartmentMapper.toApartmentForRate(findById(id));
     }
 
+    @Override
+    public ApartmentResponseForSidebar getApartmentResponseForSidebarById(Long id) throws EntityNotFoundException{
+        log.info("Try to Convert to ApartmentResponseForRate");
+        return ApartmentMapper.entityToDtoForSidebar(findById(id));
+    }
+
 }

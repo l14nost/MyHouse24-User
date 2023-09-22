@@ -15,4 +15,6 @@ public interface ApartmentService {
     List<ApartmentResponseForSidebar> getAllApartmentResponse();
 
     ApartmentResponseForRate getApartmentResponseForRateById(Long id) throws EntityNotFoundException;
+
+    ApartmentResponseForSidebar getApartmentResponseForSidebarById(Long id) throws EntityNotFoundException;
 }

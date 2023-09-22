@@ -75,7 +75,7 @@
                     </a>
                     <ul class="sub-nav collapse" id="sidebar-receipts" data-bs-parent="#sidebar-menu" style="">
                         <li class="nav-item">
-                            <a class="nav-link site sidebar-active" th:href="@{/receipts}" id="contact-page">
+                            <a class="nav-link site sidebar-active" th:href="@{/bills}" id="contact-page">
                                 <i class="icon">
                                     <svg class="icon-10" xmlns="http://www.w3.org/2000/svg" width="10"
                                          viewBox="0 0 24 24" fill="currentColor">
@@ -84,7 +84,13 @@
                                         </g>
                                     </svg>
                                 </i>
-                                <i class="sidenav-mini-icon">
+                                <span class="item-name" th:text="#{left.sidebar.receipts.all}"></span>
+                            </a>
+                        </li>
+                        <li class="nav-item" th:each="apartment : ${apartments}">
+                            <a class="nav-link sidebar-active" aria-current="page"
+                               th:href="@{'/bills-' + ${apartment.id}}">
+                                <i class="icon">
                                     <svg class="icon-10" xmlns="http://www.w3.org/2000/svg" width="10"
                                          viewBox="0 0 24 24" fill="currentColor">
                                         <g>
@@ -92,7 +98,7 @@
                                         </g>
                                     </svg>
                                 </i>
-                                <span class="item-name" th:text="#{left.sidebar.receipts.all}"></span>
+                                <span class="item-name" th:text="${apartment.fullName}"></span>
                             </a>
                         </li>
                     </ul>

@@ -3,7 +3,7 @@
       layout:decorate="~{user/fragments/layout}">
 
 <head>
-  <title th:text="#{rates.breadcrumb.rate}"></title>
+  <title th:text = "#{bills.card.breadcrumb}"></title>
 </head>
 
 <th:block layout:fragment="content">
@@ -12,11 +12,12 @@
     <div class="card">
       <div class="card-header d-flex justify-content-between">
         <div class="header-title">
-          <h4 class="card-title" th:text="#{rates.breadcrumb.rate}"></h4>
+          <h4 class="card-title" th:text = "#{bills.card.breadcrumb}">Bill</h4>
         </div>
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb" id="breadcrumb">
             <li class="breadcrumb-item"><a th:text = "#{global.breadcrumb.main}"></a></li>
+            <li class="breadcrumb-item"><a th:text = "#{bills.breadcrumb}"></a></li>
           </ol>
         </nav>
       </div>
@@ -27,19 +28,39 @@
 
   <div class="col-sm-12">
     <div class="card">
+      <div class="card-header d-flex">
+        <div class="col  text-end">
+          <button onclick="donePrint()" type="button" class="btn btn-primary" style="height: 40px" th:text = "#{bills.card.button.print}"></button>
+        </div>
+      </div>
       <div class="table-responsive">
-        <table class="table  table-hover table-bordered mx-0" style="max-width: 100%" id="service-table">
+        <table class="table  table-hover table-bordered mb-0" style="margin-top: 15px; max-width: 100%" id="service-table">
           <thead>
           <tr>
-            <th th:text = "#{rates.service}"></th>
-            <th th:text = "#{rates.unit}"></th>
-            <th th:text = "#{rates.price_per_unit}"></th>
+            <th>#</th>
+            <th th:text = "#{bills.card.service}"></th>
+            <th th:text = "#{bills.card.count}"></th>
+            <th th:text = "#{bills.card.unit}"></th>
+            <th th:text = "#{bills.card.price_per_unit}"></th>
+            <th th:text = "#{bills.card.price}"></th>
           </tr>
           </thead>
           <tbody>
 
           </tbody>
+          <tfoot>
+          <tr>
+            <th colspan="5"></th>
+            <th colspan="1">[[#{bills.card.total}]]: <span id="total-price"></span></th>
+          </tr>
+          </tfoot>
         </table>
+      </div>
+      <div class="card-footer">
+        <div class="col text-end">
+          <button onclick="donePrint()" type="button" class="btn btn-warning" style="height: 40px" th:text = "#{bills.card.button.upload}"></button>
+          <button onclick="donePrint()" type="button" class="btn btn-success" style="height: 40px" th:text = "#{bills.card.button.pay}"></button>
+        </div>
       </div>
     </div>
   </div>
@@ -66,22 +87,24 @@
     function getBillResponse(id) {
       $.ajax({
         method: "GET",
-        url: "/cabinet/get-rate-by-" + id,
+        url: "/cabinet/get-bill-" + id,
         dataType: 'json'
       }).done(function (response) {
-        console.log(response)
-        const SERVICE_BODY = createTableService('#service-table', response?.rate.priceRates.length)
-        $.each(response?.rate?.priceRates, function (index, priceRate) {
+        const SERVICE_BODY = createTableService('#service-table', response?.serviceBills)
+        $.each(response?.serviceBills, function (index, service) {
           $(SERVICE_BODY).append(
                   '<tr>' +
-                  '    <td>' + priceRate?.service?.name + '</td>' +
-                  '    <td>' + priceRate?.service?.unit?.name + '</td>' +
-                  '    <td>' + priceRate?.price.toFixed(2) + '</td>' +
+                  '    <td>' + (index + 1) + '</td>' +
+                  '    <td>' + service?.service?.name + '</td>' +
+                  '    <td>' + service?.count + '</td>' +
+                  '    <td>' + service?.service?.unit?.name + '</td>' +
+                  '    <td>' + service?.price + '</td>' +
+                  '    <td>' + service?.price.toFixed(2) + '</td>' +
                   '</tr>'
           );
         });
-
-        $("#breadcrumb").append(addBreadcrumbTitle('[[#{rates.breadcrumb.rate}]] - ' + response?.fullName));
+        $("#total-price").html(response?.totalPrice);
+        $("#breadcrumb").append(addBreadcrumbTitle('[[#{bills.card.breadcrumb}]] - ' + response?.number));
       }).fail(function (){
         window.location.href = "/cabinet/error";
       });
@@ -106,6 +129,10 @@
 
       return TABLE_BODY;
     }
+    function donePrint(){
+      showToast('success');
+    }
+
   </script>
 
 </th:block>

@@ -18,7 +18,7 @@ public class RateController {
 
     @GetMapping("rate-{id}")
     public ModelAndView showRate(@PathVariable Long id) {
-        return new ModelAndView("/user/pages/rate/rate");
+        return new ModelAndView("user/pages/rate/rate");
     }
 
     @GetMapping("/get-rate-by-{apartmentId}")
