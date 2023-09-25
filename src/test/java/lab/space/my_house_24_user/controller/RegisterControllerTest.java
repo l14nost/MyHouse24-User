@@ -41,7 +41,7 @@ class RegisterControllerTest {
     void showLogin() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/register"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("/user/pages/auth/register"));
+                .andExpect(view().name("user/pages/auth/register"));
     }
 
     @Test
@@ -72,6 +72,6 @@ class RegisterControllerTest {
     void showPrivacy() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/privacy-policy"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("/user/pages/auth/privacy-policy"));
+                .andExpect(view().name("user/pages/auth/privacy-policy"));
     }
 }

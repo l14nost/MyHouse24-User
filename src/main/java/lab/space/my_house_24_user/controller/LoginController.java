@@ -40,14 +40,14 @@ public class LoginController {
         if (authentication.isAuthenticated() && authentication.getPrincipal() instanceof User && authentication.getAuthorities().equals(List.of(new SimpleGrantedAuthority(UserStatus.ACTIVE.name())))){
             return new ModelAndView("redirect:/index");
         }else {
-            return new ModelAndView("/user/pages/auth/login");
+            return new ModelAndView("user/pages/auth/login");
         }
     }
 
 
     @GetMapping({"/forgot-password-send"})
     public ModelAndView showForgot() {
-        return new ModelAndView("/user/pages/auth/forgot-password");
+        return new ModelAndView("user/pages/auth/forgot-password");
     }
 
     @PostMapping("/forgot-password-send")
@@ -70,9 +70,9 @@ public class LoginController {
                 token,
                 userDetails,
                 userService.findUserByEmail(userDetails.getUsername()))) {
-            return new ModelAndView("/user/pages/auth/new-password-error");
+            return new ModelAndView("user/pages/auth/new-password-error");
         } else {
-            ModelAndView modelAndView = new ModelAndView("/user/pages/auth/new-password");
+            ModelAndView modelAndView = new ModelAndView("user/pages/auth/new-password");
             modelAndView.addObject("token", token);
             return modelAndView;
         }

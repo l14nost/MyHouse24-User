@@ -4,6 +4,9 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+docker-compose.yml
+Dockerfile
+
 ### STS ###
 .apt_generated
 .classpath

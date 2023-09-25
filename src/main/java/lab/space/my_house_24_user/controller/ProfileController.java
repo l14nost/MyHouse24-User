@@ -23,7 +23,7 @@ public class ProfileController {
 
     @GetMapping("/edit")
     public ModelAndView profileEditPage(){
-        ModelAndView model = new ModelAndView("/user/pages/profile/profile-edit");
+        ModelAndView model = new ModelAndView("user/pages/profile/profile-edit");
         model.addObject("user", userService.findUserForEdit());
         return model;
     }
@@ -52,7 +52,7 @@ public class ProfileController {
 
     @GetMapping({"","/"})
     public ModelAndView profilePage(){
-        return new ModelAndView("/user/pages/profile/profile-main");
+        return new ModelAndView("user/pages/profile/profile-main");
     }
 
 }

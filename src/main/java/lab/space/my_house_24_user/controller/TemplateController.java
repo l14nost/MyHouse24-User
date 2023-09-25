@@ -8,6 +8,6 @@ import org.springframework.web.servlet.ModelAndView;
 public class TemplateController {
     @GetMapping("/index")
     public ModelAndView index(){
-        return new ModelAndView("/user/template-pages");
+        return new ModelAndView("user/template-pages");
     }
 }

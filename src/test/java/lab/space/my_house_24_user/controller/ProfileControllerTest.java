@@ -44,7 +44,7 @@ class ProfileControllerTest {
 
         mockMvc.perform(get("/profile/edit"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("/user/pages/profile/profile-edit"));
+                .andExpect(view().name("user/pages/profile/profile-edit"));
     }
 
     @Test
@@ -99,6 +99,6 @@ class ProfileControllerTest {
     void profilePage() throws Exception {
         mockMvc.perform(get("/profile/"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("/user/pages/profile/profile-main"));
+                .andExpect(view().name("user/pages/profile/profile-main"));
     }
 }

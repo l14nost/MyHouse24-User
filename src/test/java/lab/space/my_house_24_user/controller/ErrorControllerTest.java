@@ -24,13 +24,13 @@ class ErrorControllerTest {
     void handle404() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/error-404"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("/user/pages/error/404"));
+                .andExpect(view().name("user/pages/error/404"));
     }
 
     @Test
     void accessDenied() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/access-denied"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("/user/pages/error/403"));
+                .andExpect(view().name("user/pages/error/403"));
     }
 }

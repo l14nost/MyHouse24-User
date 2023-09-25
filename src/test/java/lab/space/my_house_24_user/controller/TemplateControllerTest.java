@@ -24,6 +24,6 @@ class TemplateControllerTest {
     void index() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/index"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("/user/template-pages"));
+                .andExpect(view().name("user/template-pages"));
     }
 }

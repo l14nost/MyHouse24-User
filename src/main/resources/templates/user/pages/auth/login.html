@@ -135,13 +135,21 @@
                                    class="navbar-brand d-flex align-items-center mb-3">
                                     <div class="logo-main">
                                         <div class="logo-normal" style="display: flex; justify-content: center">
-                                            <img th:src="@{/assets/images/pages/logo.svg}" class="img-responsive"
+                                            <img th:src="@{/assets/images/pages/logo-en.png}" class="img-responsive"
                                                  alt=""
                                                  style="width: 100%;" id="logoImg">
                                         </div>
                                     </div>
                                 </a>
                                 <h2 class="mb-2 text-center">Sign In</h2>
+                                <div class="d-flex justify-content-center">
+                                    <nav>
+                                        <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+                                            <a class="nav-link active" id="nav-home-tab" href="#" style="background-color: #1aa053">For tenant</a>
+                                            <a class="nav-link" id="nav-profile-tab" href="/admin/login" role="tab" style="color: #1aa053">For admin</a>
+                                        </div>
+                                    </nav>
+                                </div>
                                 <p class="text-center">Login to stay connected.</p>
                                 <form method="POST" th:action="@{/login}">
                                     <div class="row">
@@ -180,12 +188,6 @@
                                         </li>
                                         <li class="list-group-item border-0 pb-0">
                                             <a th:href="@{/oauth2/authorization/google}"><img th:src="@{/assets/images/brands/gm.svg}" alt="gm"></a>
-                                        </li>
-                                        <li class="list-group-item border-0 pb-0">
-                                            <a href="#"><img th:src="@{/assets/images/brands/im.svg}" alt="im"></a>
-                                        </li>
-                                        <li class="list-group-item border-0 pb-0">
-                                            <a href="#"><img th:src="@{/assets/images/brands/li.svg}" alt="li"></a>
                                         </li>
                                     </ul>
                                 </div>

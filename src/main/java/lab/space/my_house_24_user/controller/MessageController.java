@@ -19,7 +19,7 @@ public class MessageController {
     private final MessageService messageService;
     @GetMapping("")
     public ModelAndView messagePage(){
-        return new ModelAndView("/user/pages/message/message-main");
+        return new ModelAndView("user/pages/message/message-main");
     }
 
 
@@ -30,7 +30,7 @@ public class MessageController {
 
     @GetMapping("/message-card/{id}")
     public ModelAndView messageCardPage(@PathVariable Long id){
-        ModelAndView modelAndView = new ModelAndView("/user/pages/message/message-card");
+        ModelAndView modelAndView = new ModelAndView("user/pages/message/message-card");
         modelAndView.addObject("id", id);
         messageService.changeCheck(id);
         return modelAndView;

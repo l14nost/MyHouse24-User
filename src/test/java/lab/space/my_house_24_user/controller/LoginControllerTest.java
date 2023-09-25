@@ -93,14 +93,14 @@ class LoginControllerTest {
         SecurityContextHolder.setContext(securityContext);
         mockMvc.perform(get("/login"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("/user/pages/auth/login"));
+                .andExpect(view().name("user/pages/auth/login"));
     }
 
     @Test
     void showForgot() throws Exception {
         mockMvc.perform(get("/login/forgot-password-send"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("/user/pages/auth/forgot-password"));
+                .andExpect(view().name("user/pages/auth/forgot-password"));
     }
 
 
@@ -139,7 +139,7 @@ class LoginControllerTest {
         when(jwtService.isTokenValid("token",userDetails,user)).thenReturn(true);
         mockMvc.perform(get("/login/forgot-password/token"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("/user/pages/auth/new-password"));
+                .andExpect(view().name("user/pages/auth/new-password"));
     }
 
     @Test
@@ -157,7 +157,7 @@ class LoginControllerTest {
         when(jwtService.isTokenValid("token",userDetails,user)).thenReturn(false);
         mockMvc.perform(get("/login/forgot-password/token"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("/user/pages/auth/new-password-error"));
+                .andExpect(view().name("user/pages/auth/new-password-error"));
     }
 
     @Test

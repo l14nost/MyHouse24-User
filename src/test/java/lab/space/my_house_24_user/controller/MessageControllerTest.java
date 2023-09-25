@@ -41,7 +41,7 @@ class MessageControllerTest {
     void messagePage() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/messages"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("/user/pages/message/message-main"));
+                .andExpect(view().name("user/pages/message/message-main"));
     }
 
     @Test
@@ -64,7 +64,7 @@ class MessageControllerTest {
     void messageCardPage() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/messages/message-card/1"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("/user/pages/message/message-card"));
+                .andExpect(view().name("user/pages/message/message-card"));
         verify(messageService, times(1)).changeCheck(1L);
     }
 

@@ -6,6 +6,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import lab.space.my_house_24_user.entity.User;
 import lab.space.my_house_24_user.service.JwtService;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +18,7 @@ import java.util.Date;
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@Setter
 public class JwtServiceImpl implements JwtService {
 
     @Value("${app.jwt.secret}")

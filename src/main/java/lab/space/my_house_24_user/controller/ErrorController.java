@@ -12,13 +12,13 @@ public class ErrorController {
 
     @RequestMapping("/error-404")
     public ModelAndView handle404() {
-        return new ModelAndView("/user/pages/error/404");
+        return new ModelAndView("user/pages/error/404");
     }
 
 
 
     @GetMapping("/access-denied")
     public ModelAndView accessDenied() {
-        return new ModelAndView("/user/pages/error/403");
+        return new ModelAndView("user/pages/error/403");
     }
 }

@@ -35,7 +35,7 @@ class SummaryControllerTest {
     void summaryPage() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/statistic/summary/1"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("/user/pages/statistic/statistic"));
+                .andExpect(view().name("user/pages/statistic/statistic"));
     }
 
     @Test

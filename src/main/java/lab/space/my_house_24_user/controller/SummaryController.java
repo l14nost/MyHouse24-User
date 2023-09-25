@@ -23,7 +23,7 @@ public class SummaryController {
 
     @GetMapping("/summary/{id}")
     public ModelAndView summaryPage(@PathVariable Long id){
-        ModelAndView modelAndView = new ModelAndView("/user/pages/statistic/statistic");
+        ModelAndView modelAndView = new ModelAndView("user/pages/statistic/statistic");
         modelAndView.addObject("id", id);
         return modelAndView;
     }

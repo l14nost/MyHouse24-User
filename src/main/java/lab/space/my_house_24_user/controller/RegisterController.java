@@ -28,7 +28,7 @@ public class RegisterController {
 
     @GetMapping({"/register/", "/register"})
     public ModelAndView showLogin() {
-        return new ModelAndView("/user/pages/auth/register");
+        return new ModelAndView("user/pages/auth/register");
     }
 
     @PostMapping("/register")
@@ -49,7 +49,7 @@ public class RegisterController {
 
     @GetMapping("/privacy-policy")
     public ModelAndView showPrivacy(){
-        return new ModelAndView("/user/pages/auth/privacy-policy");
+        return new ModelAndView("user/pages/auth/privacy-policy");
     }
 
 

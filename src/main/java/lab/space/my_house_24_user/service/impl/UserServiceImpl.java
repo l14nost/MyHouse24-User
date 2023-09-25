@@ -142,7 +142,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         User user = User.builder()
                 .password(passwordEncoder.encode(registerRequest.password()))
                 .email(registerRequest.email())
-                .duty(false)
                 .addDate(Instant.now())
                 .userStatus(UserStatus.NEW)
                 .lastname(registerRequest.lastname())
