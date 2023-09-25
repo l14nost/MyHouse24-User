@@ -28,6 +28,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(MockitoExtension.class)
 class RegisterControllerTest {
 
+    @MockBean
+    private GlobalControllerAdvice globalControllerAdvice;
+
     @Autowired
     private MockMvc mockMvc;
     @Autowired
