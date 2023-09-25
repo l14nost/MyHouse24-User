@@ -23,6 +23,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc(addFilters = false)
 @ExtendWith(MockitoExtension.class)
 class SummaryControllerTest {
+    @MockBean
+    private GlobalControllerAdvice globalControllerAdvice;
     @Autowired
     private MockMvc mockMvc;
     @Autowired
@@ -33,7 +35,7 @@ class SummaryControllerTest {
 
     @Test
     void summaryPage() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/statistic/summary/1"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/summary-1"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("user/pages/statistic/statistic"));
     }
@@ -41,7 +43,7 @@ class SummaryControllerTest {
     @Test
     void getSummaryById() throws Exception {
         when(summaryService.summaryByApartment(1L)).thenReturn(SummaryResponse.builder().build());
-        mockMvc.perform(MockMvcRequestBuilders.get("/statistic/get-summary-by-id/1"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/get-summary-by-id/1"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(objectMapper.writeValueAsString(SummaryResponse.builder().build())));
     }
@@ -49,7 +51,7 @@ class SummaryControllerTest {
     @Test
     void getSummaryById_NotFound() throws Exception {
         when(summaryService.summaryByApartment(1L)).thenThrow(new EntityNotFoundException());
-        mockMvc.perform(MockMvcRequestBuilders.get("/statistic/get-summary-by-id/1"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/get-summary-by-id/1"))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string("Apartment not found"));
     }

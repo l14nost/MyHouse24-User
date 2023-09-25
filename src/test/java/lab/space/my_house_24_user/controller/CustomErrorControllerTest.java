@@ -25,6 +25,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc(addFilters = false)
 @ExtendWith(MockitoExtension.class)
 class CustomErrorControllerTest {
+    @MockBean
+    private GlobalControllerAdvice globalControllerAdvice;
+
     @Autowired
     private MockMvc mockMvc;
     @Test

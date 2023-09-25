@@ -3,7 +3,6 @@ version: "3.8"
 services:
   myhouse24-cabinet:
     build: .
-    container_name: myhouse24-cabinet
     ports:
       - target: 8082
         published: 8082
