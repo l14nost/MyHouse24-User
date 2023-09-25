@@ -36,7 +36,7 @@
                                 <div class="row">
                                     <div style="display: flex; justify-content: center">
                                         <div class="profile-img-edit photo" >
-                                            <img class="personPhoto" alt="user-card img" id="avatar" >
+                                            <img class="personPhoto error-photo" alt="user-card img" id="avatar" >
                                         </div>
                                     </div>
                                     <div>
@@ -120,7 +120,6 @@
                     url: "/cabinet/user/get-user-profile"
                 }).done(
                     function (response){
-                        console.log(response);
                         $("#fullName").text(response.fullName);
                         $("#notes").text(response.notes);
                         $("#number").text(response.number);
@@ -142,24 +141,24 @@
                                 "                                        <span>"+entity.fullName+"</span>\n" +
                                 "                                        <div class=\"row\" style=\"margin-top: 20px\">\n" +
                                 "                                            <div class=\"col-md-6\">\n" +
-                                "                                                <img style=\"width: 100%; height: 100%\" id=\"image1\" src=\"/cabinet/files/"+entity.image1+"\">\n" +
+                                "                                                <img class=\"error-photo\" style=\"width: 100%; height: 100%\" id=\"image1\" src=\"/cabinet/files/"+entity.image1+"\">\n" +
                                 "                                            </div>\n" +
                                 "                                            <div class=\"col-md-6\" style=\"align-items: center\">\n" +
                                 "                                                <div class=\"row\" style=\"height: 100%;align-items: center\">\n" +
                                 "                                                    <div class=\"row\" style=\" height: 45%\">\n" +
                                 "                                                        <div class=\"col-md-6\">\n" +
-                                "                                                            <img style=\"width: 100%; height: 100%\" id=\"image2\" src=\"/cabinet/files/"+entity.image2+"\">\n" +
+                                "                                                            <img class=\"error-photo\" style=\"width: 100%; height: 100%\" id=\"image2\" src=\"/cabinet/files/"+entity.image2+"\">\n" +
                                 "                                                        </div>\n" +
                                 "                                                        <div class=\"col-md-6\">\n" +
-                                "                                                            <img style=\"width: 100%; height: 100%\" id=\"image3\" src=\"/cabinet/files/"+entity.image3+"\">\n" +
+                                "                                                            <img class=\"error-photo\" style=\"width: 100%; height: 100%\" id=\"image3\" src=\"/cabinet/files/"+entity.image3+"\">\n" +
                                 "                                                        </div>\n" +
                                 "                                                    </div>\n" +
                                 "                                                    <div class=\"row\" style=\" height: 50%; padding-top: 5%\">\n" +
                                 "                                                        <div class=\"col-md-6\">\n" +
-                                "                                                            <img style=\"width: 100%; height: 100%\" id=\"image4\" src=\"/cabinet/files/"+entity.image4+"\">\n" +
+                                "                                                            <img class=\"error-photo\" style=\"width: 100%; height: 100%\" id=\"image4\" src=\"/cabinet/files/"+entity.image4+"\">\n" +
                                 "                                                        </div>\n" +
                                 "                                                        <div class=\"col-md-6\">\n" +
-                                "                                                            <img style=\"width: 100%; height: 100%\" id=\"image5\" src=\"/cabinet/files/"+entity.image5+"\">\n" +
+                                "                                                            <img class=\"error-photo\" style=\"width: 100%; height: 100%\" id=\"image5\" src=\"/cabinet/files/"+entity.image5+"\">\n" +
                                 "                                                        </div>\n" +
                                 "                                                    </div>\n" +
                                 "                                                </div>\n" +
@@ -210,6 +209,11 @@
                                 "                                    </li>\n" +
                                 "                                </ul>";
                             summaryContainer.appendChild(newLi);
+                        });
+                        $('.error-photo').bind('error', function() {
+                            var fieldID = $(this).attr('id');
+                            var photo = document.getElementById(fieldID);
+                            photo.src = "/cabinet/static/assets/images/default.jpg";
                         });
                     }
                 )

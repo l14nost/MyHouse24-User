@@ -142,7 +142,7 @@
   <script>
     $(document).ready(function (){
       $.ajax({
-        url: "/cabinet/statistic/get-summary-by-id/"+[[${id}]],
+        url: "/cabinet/get-summary-by-id/"+[[${id}]],
       })
               .done(function (response){
                 $("#title").text("[[#{left.sidebar.summary}]]"+" - "+response.title);

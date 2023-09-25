@@ -26,7 +26,7 @@ public class BillController {
     private final BillService billService;
     private final ApartmentService apartmentService;
 
-    @GetMapping("bills")
+    @GetMapping("bills-all")
     public ModelAndView showAllBillsPage(){
         return new ModelAndView("user/pages/bill/bills");
     }

@@ -279,32 +279,21 @@
         var chapter = pathSplit[2];
 
         var ids = [];
+        var idsSpecial = ["summary", "rate", "bill"];
         for (var i = 0; i < navLinks.length; i++) {
             ids.push(navLinks[i].id);
         }
         for (var i =0; i< ids.length; i++){
-            if (chapter.includes(ids[i]) && !chapter.includes("site") && !chapter.includes("system")){
+
+            if (chapter.includes(ids[i])){
                 var targetLinks = document.getElementById(ids[i]);
-                targetLinks.classList.add("active")
-            }
-            else{
-                if (pathSplit.length>3){
-                    var chapter1 = pathSplit[3];
-                    if (chapter1.includes(ids[i]) && chapter.includes("site")) {
-                        var targetLinksSite = document.getElementById(ids[i]);
-                        targetLinksSite.classList.add("active")
-                        var targetUlSite = document.getElementById("sidebar-special");
-                        var linkElement = document.getElementById('special-a');
+                targetLinks.classList.add("active");
+                for (let j =0; j<idsSpecial.length; j++){
+                    if (ids[i].includes(idsSpecial[j])){
+                        var targetUlSite = document.getElementById("sidebar-"+idsSpecial[j]);
+                        var linkElement = document.getElementById(idsSpecial[j]+'-a');
                         linkElement.setAttribute('aria-expanded', 'true');
                         targetUlSite.classList.add("show");
-                    }
-                    else if(chapter1.includes(ids[i]) && chapter.includes("system")){
-                        var targetLinksSystem = document.getElementById(ids[i]);
-                        targetLinksSystem.classList.add("active")
-                        var targetUlSystem = document.getElementById("sidebar-icons");
-                        var linkElement1  = document.getElementById('icons-a');
-                        linkElement1.setAttribute('aria-expanded', 'true');
-                        targetUlSystem.classList.add("show");
                     }
                 }
             }
@@ -446,7 +435,7 @@
                     let summaryContainer = document.getElementById("sidebar-summary");
                     let newLi = document.createElement("li");
                     newLi.classList.add("nav-item")
-                    newLi.innerHTML = " <a class=\"nav-link site sidebar-active\" href=\"/cabinet/statistic/summary/" + entity.id + "\" id=\"contact-page\">\n" +
+                    newLi.innerHTML = " <a class=\"nav-link site sidebar-active\" href=\"/cabinet/summary-" + entity.id + "\" id=\"summary-"+entity.id+"\">\n" +
                         "                                <i class=\"icon\">\n" +
                         "                                    <svg class=\"icon-10\" xmlns=\"http://www.w3.org/2000/svg\" width=\"10\" viewBox=\"0 0 24 24\" fill=\"currentColor\">\n" +
                         "                                        <g>\n" +
@@ -617,6 +606,24 @@
             '   <a class="page-link" role="button">' + pageNumber + '</a>' +
             '</li>';
     }
+</script>
+<script>
+    $(document).ready(function() {
+        var errorImages = document.querySelectorAll(".error-photo");
+        errorImages.forEach(function(image) {
+            var testImage = new Image();
+            testImage.src = image.src;
+            testImage.addEventListener("error", function() {
+                image.src = "/cabinet/static/assets/images/default.jpg";
+            });
+        });
+
+        $('.error-photo').bind('error', function() {
+            var fieldID = $(this).attr('id');
+            var photo = document.getElementById(fieldID);
+            photo.src = "/cabinet/static/assets/images/default.jpg";
+        });
+    });
 </script>
 <script>
 

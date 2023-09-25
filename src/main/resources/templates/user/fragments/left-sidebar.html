@@ -55,8 +55,8 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link collapsed" data-bs-toggle="collapse" href="#sidebar-receipts" role="button"
-                       aria-expanded="false" aria-controls="sidebar-special" id="receipts-a">
+                    <a class="nav-link collapsed" data-bs-toggle="collapse" href="#sidebar-bill" role="button"
+                       aria-expanded="false" aria-controls="sidebar-special" id="bill-a">
                         <i class="icon">
                             <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512">
                                 <!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
@@ -73,9 +73,9 @@
                             </svg>
                         </i>
                     </a>
-                    <ul class="sub-nav collapse" id="sidebar-receipts" data-bs-parent="#sidebar-menu" style="">
+                    <ul class="sub-nav collapse" id="sidebar-bill" data-bs-parent="#sidebar-menu" style="">
                         <li class="nav-item">
-                            <a class="nav-link site sidebar-active" th:href="@{/bills}" id="contact-page">
+                            <a class="nav-link site sidebar-active" th:href="@{/bills-all}" id="bills-all">
                                 <i class="icon">
                                     <svg class="icon-10" xmlns="http://www.w3.org/2000/svg" width="10"
                                          viewBox="0 0 24 24" fill="currentColor">
@@ -89,7 +89,7 @@
                         </li>
                         <li class="nav-item" th:each="apartment : ${apartments}">
                             <a class="nav-link sidebar-active" aria-current="page"
-                               th:href="@{'/bills-' + ${apartment.id}}">
+                               th:href="@{'/bills-' + ${apartment.id}}" th:id="${'bills-'+apartment.id}">
                                 <i class="icon">
                                     <svg class="icon-10" xmlns="http://www.w3.org/2000/svg" width="10"
                                          viewBox="0 0 24 24" fill="currentColor">
@@ -106,7 +106,7 @@
 
                 <li class="nav-item">
                     <a class="nav-link collapsed" data-bs-toggle="collapse" href="#sidebar-rate" role="button"
-                       aria-expanded="false" aria-controls="sidebar-special" id="rates-a">
+                       aria-expanded="false" aria-controls="sidebar-special" id="rate-a">
                         <i class="icon">
                             <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512">
                                 <!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
@@ -126,7 +126,7 @@
                     <ul class="sub-nav collapse" id="sidebar-rate" data-bs-parent="#sidebar-menu" style="">
                         <li class="nav-item" th:each="apartment : ${apartments}">
                             <a class="nav-link sidebar-active" aria-current="page"
-                               th:href="@{'/rate-' + ${apartment.id}}">
+                               th:href="@{'/rate-' + ${apartment.id}}" th:id="${'rate-'+apartment.id}">
                                 <i class="icon">
                                     <svg class="icon-10" xmlns="http://www.w3.org/2000/svg" width="10"
                                          viewBox="0 0 24 24" fill="currentColor">
@@ -155,7 +155,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link sidebar-active" aria-current="page" th:href="@{/masters-applications}" id="master-cal">
+                    <a class="nav-link sidebar-active" aria-current="page" th:href="@{/masters-applications}" id="masters-applications">
                         <i class="icon">
                             <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
                                 <!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
