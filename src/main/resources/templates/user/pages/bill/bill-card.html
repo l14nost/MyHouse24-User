@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{user/fragments/layout}">
+
+<head>
+  <title th:text = "#{bills.card.breadcrumb}"></title>
+</head>
+
+<th:block layout:fragment="content">
+
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card-header d-flex justify-content-between">
+        <div class="header-title">
+          <h4 class="card-title" th:text = "#{bills.card.breadcrumb}">Bill</h4>
+        </div>
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb" id="breadcrumb">
+            <li class="breadcrumb-item"><a th:text = "#{global.breadcrumb.main}"></a></li>
+            <li class="breadcrumb-item"><a th:text = "#{bills.breadcrumb}"></a></li>
+          </ol>
+        </nav>
+      </div>
+      <div class="card-body px-0">
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card-header d-flex">
+        <div class="col  text-end">
+          <button onclick="donePrint()" type="button" class="btn btn-primary" style="height: 40px" th:text = "#{bills.card.button.print}"></button>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table  table-hover table-bordered mb-0" style="margin-top: 15px; max-width: 100%" id="service-table">
+          <thead>
+          <tr>
+            <th>#</th>
+            <th th:text = "#{bills.card.service}"></th>
+            <th th:text = "#{bills.card.count}"></th>
+            <th th:text = "#{bills.card.unit}"></th>
+            <th th:text = "#{bills.card.price_per_unit}"></th>
+            <th th:text = "#{bills.card.price}"></th>
+          </tr>
+          </thead>
+          <tbody>
+
+          </tbody>
+          <tfoot>
+          <tr>
+            <th colspan="5"></th>
+            <th colspan="1">[[#{bills.card.total}]]: <span id="total-price"></span></th>
+          </tr>
+          </tfoot>
+        </table>
+      </div>
+      <div class="card-footer">
+        <div class="col text-end">
+          <button onclick="donePrint()" type="button" class="btn btn-warning" style="height: 40px" th:text = "#{bills.card.button.upload}"></button>
+          <button onclick="donePrint()" type="button" class="btn btn-success" style="height: 40px" th:text = "#{bills.card.button.pay}"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</th:block>
+
+<!-- Extra Modals -->
+<th:block layout:fragment="extra-modals">
+
+  <!-- put extra modals here for only this page -->
+
+</th:block>
+
+<th:block layout:fragment="extra-script">
+
+  <script>
+    let apartmentId = undefined;
+
+    $(document).ready(function () {
+      apartmentId = new URL(window.location.href).pathname.split("-").pop()
+      getBillResponse(apartmentId);
+    });
+
+    function getBillResponse(id) {
+      $.ajax({
+        method: "GET",
+        url: "/cabinet/get-bill-" + id,
+        dataType: 'json'
+      }).done(function (response) {
+        const SERVICE_BODY = createTableService('#service-table', response?.serviceBills)
+        $.each(response?.serviceBills, function (index, service) {
+          $(SERVICE_BODY).append(
+                  '<tr>' +
+                  '    <td>' + (index + 1) + '</td>' +
+                  '    <td>' + service?.service?.name + '</td>' +
+                  '    <td>' + service?.count + '</td>' +
+                  '    <td>' + service?.service?.unit?.name + '</td>' +
+                  '    <td>' + service?.price + '</td>' +
+                  '    <td>' + service?.price.toFixed(2) + '</td>' +
+                  '</tr>'
+          );
+        });
+        $("#total-price").html(response?.totalPrice);
+        $("#breadcrumb").append(addBreadcrumbTitle('[[#{bills.card.breadcrumb}]] - ' + response?.number));
+      }).fail(function (){
+        window.location.href = "/cabinet/error";
+      });
+    }
+    function donePrint(){
+      showToast('success');
+    }
+
+  </script>
+
+</th:block>
+
+</html>

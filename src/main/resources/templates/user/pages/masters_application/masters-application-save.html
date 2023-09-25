@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{user/fragments/layout}">
+
+<head>
+    <title th:text="#{masters_appl.save.breadcrumb}"></title>
+</head>
+
+<th:block layout:fragment="content">
+
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between">
+                <div class="header-title">
+                    <h4 class="card-title" th:text="#{masters_appl.breadcrumb}"></h4>
+                </div>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb" id="breadcrumb">
+                        <li class="breadcrumb-item"><a th:text="#{global.breadcrumb.main}"></a></li>
+                        <li class="breadcrumb-item"><a th:text="#{masters_appl.breadcrumb}"></a></li>
+                        <li class="breadcrumb-item"><a th:text="#{masters_appl.save.breadcrumb}"></a></li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="card-body px-0">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-12">
+        <div class="card">
+
+            <div class="card-body">
+
+                <div class="form-group">
+                    <label class="form-label" th:text="#{masters_appl.save.masters_type}"></label>
+                    <select id="type-master" class="mb-1 form-select" aria-label=".form-select-lg example">
+                        <option value=""></option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" th:text="#{masters_appl.save.apartment}"></label>
+                    <select id="apartment" class="mb-1 form-select" aria-label=".form-select-lg example">
+                        <option value=""></option>
+                    </select>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-6 pe-5">
+                        <label class="form-label" th:text="#{masters_appl.save.date}"></label>
+                        <div class="input-group">
+                            <input class="form-control" id="date" type="date">
+                            <button class="input-group-text input-button pointer-event" disabled>
+                                <svg width="24" class="icon-24" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                     viewBox="0 0 24 24"
+                                     stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label" th:text="#{masters_appl.save.time}"></label>
+                        <div class="input-group">
+                            <input class="form-control time_flatpicker" id="time" type="time">
+                            <button class="input-group-text input-button pointer-event" disabled>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 512 512">
+                                    <path d="M464 256A208 208 0 1 1 48 256a208 208 0 1 1 416 0zM0 256a256 256 0 1 0 512 0A256 256 0 1 0 0 256zM232 120V256c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2V120c0-13.3-10.7-24-24-24s-24 10.7-24 24z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="description" class="form-label" th:text="#{masters_appl.save.description}"></label>
+                    <textarea type="text" class="form-control" id="description"
+                              rows="8"></textarea>
+                </div>
+
+            </div>
+
+            <div class="card-footer">
+                <div class="col text-end">
+                    <button onclick="saveMastersApplication()" type="button" class="btn btn-success"
+                            style="margin-left: 15px; margin-right: 50px"
+                            th:text="#{masters_appl.save.button.save_appl}">
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</th:block>
+
+<!-- Extra Modals -->
+<th:block layout:fragment="extra-modals">
+
+    <!-- put extra modals here for only this page -->
+
+</th:block>
+
+<th:block layout:fragment="extra-script">
+
+    <script>
+        function saveMastersApplication() {
+            let mastersApplicationRequest = {
+                description: undefined,
+                masterType: undefined,
+                date: undefined,
+                time: undefined,
+                apartmentId: undefined
+            };
+            mastersApplicationRequest.description = $("#description").val();
+            if ($("#type-master").val() !== '') mastersApplicationRequest.masterType = $("#type-master").val();
+            if ($("#date").val() !== '') mastersApplicationRequest.date = getTrueDate($("#date").val());
+            if ($("#time").val() !== '') mastersApplicationRequest.time = $("#time").val();
+            if ($("#apartment").val() !== '') mastersApplicationRequest.apartmentId = $("#apartment").val();
+            $.ajax({
+                method: "POST",
+                url: '/cabinet/masters-applications/save-master-call',
+                contentType: 'application/json',
+                data: JSON.stringify(mastersApplicationRequest),
+                beforeSend: function () {
+                    clearValidMessages();
+                }
+            }).done(function () {
+                showToast('success');
+                window.location.href = "/cabinet/masters-applications";
+            }).fail(function (response) {
+                const errors = response.responseJSON;
+                console.log(response);
+                if (errors?.description) validResponse($('#description'), errors.description, 'div')
+                if (errors?.masterType) validResponse($('#type-master'), errors.masterType, 'div')
+                if (errors?.date) validResponse($('#date'), errors.date, 'div')
+                if (errors?.time) validResponse($('#time'), errors.time, 'div')
+                if (errors?.apartmentId) validResponse($('#apartment'), errors.apartmentId, 'div')
+            })
+        }
+
+        $('#type-master').select2({
+            theme: 'bootstrap-5',
+            minimumResultsForSearch: -1,
+            ajax: {
+                method: 'GET',
+                url: '/cabinet/masters-applications/get-all-type-master',
+                cache: true,
+                delay: 1000,
+                processResults: function (data) {
+                    return {
+                        results: data.map(function (item) {
+                            return {
+                                id: item.name,
+                                text: item.value
+                            };
+                        })
+                    };
+                }
+            }
+        });
+
+        $('#apartment').select2({
+            theme: 'bootstrap-5',
+            minimumResultsForSearch: -1,
+            ajax: {
+                method: 'GET',
+                url: '/cabinet/masters-applications/get-all-apartment',
+                cache: true,
+                delay: 1000,
+                processResults: function (data) {
+                    return {
+                        results: data.map(function (item) {
+                            return {
+                                id: item.id,
+                                text: item.fullName
+                            };
+                        })
+                    };
+                }
+            }
+        });
+
+        const date_flatpickr = document.querySelectorAll('#date');
+        Array.from(date_flatpickr, (elem) => {
+            if (typeof flatpickr !== typeof undefined) {
+                flatpickr(elem, {
+                    minDate: "today",
+                    dateFormat: "d.m.Y",
+                })
+            }
+        })
+
+        function getTrueDate(date) {
+            let trueDate = '';
+            let split = date.split(".");
+            trueDate = split[2] + '-' + split[1] + '-' + split[0];
+            return trueDate;
+        }
+
+    </script>
+
+</th:block>
+
+</html>

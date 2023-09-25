@@ -6,9 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +19,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Accessors(chain = true)
 public class Bill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -70,4 +71,23 @@ public class Bill {
     @OneToMany(mappedBy = "bill", cascade = CascadeType.ALL)
     List<ServiceBill> serviceBillList = new ArrayList<>();
 
+    @Override
+    public String toString() {
+        return "Bill{" +
+                "id=" + id +
+                ", number='" + number + '\'' +
+                ", createAt=" + createAt +
+                ", status=" + status +
+                ", totalPrice=" + totalPrice +
+                ", isActive=" + isActive +
+                ", autoPayed=" + autoPayed +
+                ", payedCashBox=" + payedCashBox +
+                ", payed=" + payed +
+                ", draft=" + draft +
+                ", bankBook=" + bankBook.getId() +
+                ", periodOf=" + periodOf +
+                ", periodTo=" + periodTo +
+                ", rate=" + rate.getId() +
+                '}';
+    }
 }

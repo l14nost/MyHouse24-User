@@ -8,7 +8,7 @@ import java.util.Locale;
 public enum Page {
     STATISTICS("Statistics", "Статистика"),
     CASH_BOX("Cash box", "Каса"),
-    BILLS("Bills", "Квитанція на сплату"),
+    BILLS("bills.breadcrumb", "Квитанція на сплату"),
     BANK_BOOKS("Bank books", "Особовий рахунок"),
     APARTMENTS("Apartments", "Квартири"),
     APARTMENTS_OWNERS("Apartments owners", "Власники квартир"),

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{user/fragments/layout}">
+
+<head>
+  <title th:text="#{masters_appl.breadcrumb}"></title>
+</head>
+
+<th:block layout:fragment="content">
+
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card-header d-flex justify-content-between">
+        <div class="header-title">
+          <h4 class="card-title" th:text="#{masters_appl.breadcrumb}"></h4>
+        </div>
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb" id="breadcrumb">
+            <li class="breadcrumb-item"><a th:text = "#{global.breadcrumb.main}"></a></li>
+            <li class="breadcrumb-item"><a th:text="#{masters_appl.breadcrumb}"></a></li>
+          </ol>
+        </nav>
+      </div>
+      <div class="card-body px-0">
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 text-end" style="padding-bottom: 30px">
+    <a th:href="@{/masters-applications/add}" type="button" class="btn btn-success" th:text="#{masters_appl.button.add}"></a>
+  </div>
+
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="table-responsive">
+        <table class="table table-striped table-hover table-bordered link-row" id="masters-appl-table"
+               style="max-width: 100%">
+          <thead>
+          <tr>
+            <th th:text="#{masters_appl.number_appl}"></th>
+            <th th:text="#{masters_appl.masters_type}"></th>
+            <th th:text="#{masters_appl.description}"></th>
+            <th th:text="#{masters_appl.apartment}"></th>
+            <th th:text="#{masters_appl.date_time}"></th>
+            <th th:text="#{masters_appl.status}"></th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+
+          </tbody>
+        </table>
+      </div>
+      <div class="card-footer">
+        <div class="row" style="display: flex; justify-content: space-between">
+        </div>
+      </div>
+    </div>
+  </div>
+
+</th:block>
+
+<!-- Extra Modals -->
+<th:block layout:fragment="extra-modals">
+
+  <!-- put extra modals here for only this page -->
+
+</th:block>
+
+<th:block layout:fragment="extra-script">
+
+  <script>
+    let mastersApplId = undefined;
+    let mastersRequest = {};
+    mastersRequest.pageIndex = 0;
+
+    $(document).ready(function () {
+      getAllMastersApplications();
+    });
+
+
+    $(document).on('click', '.text-danger', function () {
+      mastersApplId = $(this).data('id');
+      $('#confirmDelete').modal('show');
+    });
+
+    function deleteEntity() {
+      $.ajax({
+        method: "DELETE",
+        url: "/cabinet/masters-applications/delete-master-call/" + mastersApplId,
+        contentType: 'application/json'
+      }).done(function () {
+        $('#confirmDelete').modal('hide');
+        mastersApplId = undefined;
+        getAllMastersApplications();
+        showToast('success');
+      }).fail(function (response) {
+        console.log(response);
+        $('#confirmDelete').modal('hide');
+        showToast('error');
+        mastersApplId = undefined;
+      })
+    }
+
+    function getAllMastersApplications() {
+      $.ajax({
+        method: "POST",
+        url: "/cabinet/masters-applications/get-all-master-call",
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify(mastersRequest)
+      }).done(function (response) {
+        const TABLE_BODY = createTable('#masters-appl-table', response?.totalElements, response?.totalPages, mastersRequest?.pageIndex);
+        $.each(response?.content, function (index, mastersAppl) {
+          const $deleteBtn = '<a class="btn btn-sm btn-icon text-danger" type="button" data-status="'+ mastersAppl?.status.name +'" data-bs-toggle="tooltip" aria-label="Delete Staff" data-bs-original-title="Delete Staff" data-toggle="modal" data-target="#confirmDelete" data-id="' + mastersAppl.id + '">' +
+                  '<span class="btn-inner">' +
+                  '<svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor">' +
+                  '<path d="M19.3248 9.46826C19.3248 9.46826 18.7818 16.2033 18.4668 19.0403C18.3168 20.3953 17.4798 21.1893 16.1088 21.2143C13.4998 21.2613 10.8878 21.2643 8.27979 21.2093C6.96079 21.1823 6.13779 20.3783 5.99079 19.0473C5.67379 16.1853 5.13379 9.46826 5.13379 9.46826" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>' +
+                  '<path d="M20.708 6.23975H3.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>' +
+                  '<path d="M17.4406 6.23973C16.6556 6.23973 15.9796 5.68473 15.8256 4.91573L15.5826 3.69973C15.4326 3.13873 14.9246 2.75073 14.3456 2.75073H10.1126C9.53358 2.75073 9.02558 3.13873 8.87558 3.69973L8.63258 4.91573C8.47858 5.68473 7.80258 6.23973 7.01758 6.23973" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>' +
+                  ' </svg>' +
+                  '</span>' +
+                  '</a>';
+          $(TABLE_BODY).append(
+                  '<tr>' +
+                  '    <td>' + mastersAppl?.id + '</td>' +
+                  '    <td>' + mastersAppl?.masterType?.value + '</td>' +
+                  '    <td>' + mastersAppl?.description + '</td>' +
+                  '    <td>' + mastersAppl?.apartment?.fullName + '</td>' +
+                  '    <td>' + (mastersAppl?.date + ' - ' + mastersAppl?.time) + '</td>' +
+                  '    <td class="h5">' + addBadgeApplicationStatus(mastersAppl?.status) + '</td>' +
+                  '    <td>' + $deleteBtn + '</td>' +
+                  '</tr>'
+          );
+        });
+        document.querySelectorAll("a.btn.btn-sm.btn-icon.text-danger").forEach(function (button) {
+          let status = button.getAttribute("data-status");
+          if (status !== "NEW") {
+            button.classList.add('disabled');
+          }
+        });
+      });
+    }
+
+  </script>
+
+</th:block>
+
+</html>

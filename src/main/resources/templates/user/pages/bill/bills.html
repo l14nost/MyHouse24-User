@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{user/fragments/layout}">
+
+<head>
+  <title th:text="#{bills.breadcrumb}"></title>
+</head>
+
+<th:block layout:fragment="content">
+
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card-header d-flex justify-content-between">
+        <div class="header-title">
+          <h4 class="card-title" th:text = "#{bills.breadcrumb}"></h4>
+        </div>
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb" id="breadcrumb">
+            <li class="breadcrumb-item"><a th:text = "#{global.breadcrumb.main}"></a></li>
+          </ol>
+        </nav>
+      </div>
+      <div class="card-body px-0">
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card-header d-flex">
+        <div class="col text-end">
+          <button onclick="clearInput()" type="button" class="btn btn-light" style="height: 40px"
+                  th:text="#{bills.clear_input}"></button>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-striped table-hover table-bordered link-row" id="bills-table"
+               style="margin-top: 15px; max-width: 100%">
+          <thead>
+          <tr>
+            <th>№</th>
+            <th th:text="#{bills.date}"></th>
+            <th th:text="#{bills.status}"></th>
+            <th th:text="#{bills.paid}"></th>
+            <th th:text="#{bills.sum}"></th>
+          </tr>
+          <tr id="search">
+            <th>
+              <input class="form-control" type="text" id="number">
+            </th>
+            <th>
+              <div class="input-group">
+                <input class="form-control" id="date" type="date">
+                <button class="input-group-text input-button pointer-event" disabled>
+                  <svg width="24" class="icon-24" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                       stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                  </svg>
+                </button>
+              </div>
+            </th>
+            <th>
+              <select id="status" class="mb-1 form-select form-select"
+                      aria-label=".form-select-lg example" style="width: 160px; height: 40px">
+                <option value=""></option>
+              </select>
+            </th>
+            <th>
+              <input class="form-control" type="text" id="payed">
+            </th>
+            <th>
+              <input class="form-control" type="text" id="sum">
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+
+          </tbody>
+        </table>
+      </div>
+      <div class="card-footer">
+        <div class="row" style="display: flex; justify-content: space-between">
+        </div>
+      </div>
+    </div>
+  </div>
+
+</th:block>
+
+<!-- Extra Modals -->
+<th:block layout:fragment="extra-modals">
+
+  <!-- put extra modals here for only this page -->
+
+</th:block>
+
+<th:block layout:fragment="extra-script">
+
+  <script>
+    let billRequest = {};
+    billRequest.pageIndex = 0;
+    let filterTimeout;
+
+    $(document).ready(function () {
+      if (new URL(window.location.href).pathname.split("/").pop() !== 'bills'){
+        billRequest.apartmentIdQuery = new URL(window.location.href).pathname.split("-").pop();
+        getApartment(billRequest.apartmentIdQuery);
+      }else {
+        $("#breadcrumb").append(addBreadcrumbTitle('[[#{bills.breadcrumb}]]'));
+      }
+      getAllBill();
+      $(document.body).on("click", "tr", function (e) {
+          const href = $(this).data('href');
+          if (href) {
+            window.location.href = href;
+          }
+      });
+    });
+
+    $('#number, #date, #payed, #sum').on('input', function () {
+      clearTimeout(filterTimeout);
+      filterTimeout = setTimeout(function () {
+        updateBillRequestAndSend();
+      }, 1000);
+    });
+
+    $('#status').on('select2:select', function () {
+      updateBillRequestAndSend();
+    });
+
+    function getApartment(id) {
+      $.ajax({
+        method: "GET",
+        url: "/cabinet/get-apartment-" + id,
+        contentType: 'application/json',
+      }).done(function (response) {
+        $("#breadcrumb").append(addBreadcrumbTitle('[[#{bills.breadcrumb}]] - ' + response?.fullName));
+      });
+    }
+
+    function getAllBill() {
+      $.ajax({
+        method: "POST",
+        url: "/cabinet/get-bills",
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify(billRequest)
+      }).done(function (response) {
+        const TABLE_BODY = createTable('#bills-table', response?.totalElements, response?.totalPages, billRequest?.pageIndex);
+        $.each(response?.content, function (index, bill) {
+          $(TABLE_BODY).append(
+                  '<tr  data-href="/cabinet/bill-' + bill.id + '" data-key="' + bill.id + '">' +
+                  '    <td>' + bill?.number + '</td>' +
+                  '    <td>' + bill?.createAt + '</td>' +
+                  '    <td class="h5">' + addBadgeBillStatus(bill?.status) + '</td>' +
+                  '    <td>' + bill?.payed.toFixed(2) + '</td>' +
+                  '    <td>' + bill?.totalPrice.toFixed(2) + '</td>' +
+                  '</tr>'
+          );
+        });
+      });
+    }
+
+    $('#status').select2({
+      theme: 'bootstrap-5',
+      minimumResultsForSearch: -1,
+      ajax: {
+        method: 'GET',
+        url: '/cabinet/get-all-bill-status',
+        cache: true,
+        delay: 1000,
+        processResults: function (data) {
+          return {
+            results: data.map(function (item) {
+              return {
+                id: item.name,
+                text: item.value
+              };
+            })
+          };
+        }
+      }
+    });
+
+    function clearInput() {
+      $('#search th select').val('').trigger('change');
+      $('#search th select option').remove();
+      $('#search input').val('');
+      updateBillRequestAndSend();
+      showToast('success');
+    }
+
+    function updateBillRequestAndSend() {
+      billRequest.numberQuery = $('#number').val();
+      billRequest.dateQuery = $('#date').val();
+      if ($('#status').val() !== '') {
+        billRequest.statusQuery = $('#status').val();
+      }
+      billRequest.payedQuery = $('#payed').val();
+      billRequest.priceQuery = $('#sum').val();
+      billRequest.pageIndex = 0;
+      getAllBill();
+    }
+
+    const date_flatpickr = document.querySelectorAll('#date');
+    Array.from(date_flatpickr, (elem) => {
+      if (typeof flatpickr !== typeof undefined) {
+        flatpickr(elem, {
+          minDate: "01.01.2014",
+          dateFormat: "d.m.Y"
+        })
+      }
+    })
+
+  </script>
+
+</th:block>
+
+</html>
