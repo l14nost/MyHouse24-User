@@ -2,12 +2,18 @@ package lab.space.my_house_24_user.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
 import lab.space.my_house_24_user.entity.Apartment;
+import lab.space.my_house_24_user.mapper.ApartmentMapper;
+import lab.space.my_house_24_user.model.apartment.ApartmentResponseForRate;
+import lab.space.my_house_24_user.model.apartment.ApartmentResponseForSidebar;
 import lab.space.my_house_24_user.repository.ApartmentRepository;
 import lab.space.my_house_24_user.service.ApartmentService;
 import lab.space.my_house_24_user.specification.ApartmentSpecification;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
