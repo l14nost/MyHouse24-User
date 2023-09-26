@@ -103,7 +103,7 @@
     let filterTimeout;
 
     $(document).ready(function () {
-      if (new URL(window.location.href).pathname.split("/").pop() !== 'bills'){
+      if (new URL(window.location.href).pathname.split("/").pop() !== 'bills-all'){
         billRequest.apartmentIdQuery = new URL(window.location.href).pathname.split("-").pop();
         getApartment(billRequest.apartmentIdQuery);
       }else {
