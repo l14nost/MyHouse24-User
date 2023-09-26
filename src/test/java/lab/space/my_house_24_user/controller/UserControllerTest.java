@@ -28,8 +28,6 @@ class UserControllerTest {
     @MockBean
     private GlobalControllerAdvice globalControllerAdvice;
 
-    @MockBean
-    private GlobalControllerAdvice globalControllerAdvice;
 
     @Autowired
     private MockMvc mockMvc;
