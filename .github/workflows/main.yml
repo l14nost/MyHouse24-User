@@ -46,5 +46,5 @@ jobs:
           context: .
           dockerfile: Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/my-house-24-user:lates
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/my-house-24-user:latest
 
