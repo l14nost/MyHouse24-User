@@ -219,6 +219,7 @@ class UserServiceImplTest {
 
     @Test
     void update() {
+        mockStatic(FileHandler.class);
         when(userRepository.findById(1L)).thenReturn(Optional.of(
                 User.builder()
                         .id(1L)
