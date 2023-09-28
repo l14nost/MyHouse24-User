@@ -42,7 +42,7 @@ public class BillController {
     }
 
     @GetMapping("/get-all-bill-status")
-    public ResponseEntity<List<EnumResponse>> getAllTypeMaster() {
+    public ResponseEntity<List<EnumResponse>> getAllBillStatus() {
         return ResponseEntity.ok(billService.getAllBillStatus());
     }
 

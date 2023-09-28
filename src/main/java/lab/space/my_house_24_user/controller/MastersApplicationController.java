@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -29,13 +30,13 @@ public class MastersApplicationController {
     private final ApartmentService apartmentService;
 
     @GetMapping({"/", ""})
-    public String showMastersApplicationPage() {
-        return "user/pages/masters_application/masters-application";
+    public ModelAndView showMastersApplicationPage() {
+        return new ModelAndView("user/pages/masters_application/masters-application");
     }
 
     @GetMapping("/add")
-    public String showMastersApplicationSavePage() {
-        return "user/pages/masters_application/masters-application-save";
+    public ModelAndView showMastersApplicationSavePage() {
+        return new ModelAndView("user/pages/masters_application/masters-application-save");
     }
 
     @GetMapping("/get-all-type-master")

@@ -28,15 +28,6 @@ public class ApartmentServiceImpl implements ApartmentService {
     }
 
     @Override
-    public String bankBookByApartment(Long id) {
-        Apartment apartment = findById(id);
-        if (apartment.getBankBook()!=null) {
-            return apartment.getBankBook().getNumber();
-        }
-        return "-";
-    }
-
-    @Override
     public List<ApartmentResponseForSidebar> getAllApartmentResponse() {
         log.info("Try to get All Apartments by Context");
         return apartmentRepository
