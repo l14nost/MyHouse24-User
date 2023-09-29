@@ -117,7 +117,7 @@
     <script>
         $(document).ready(function (){
                 $.ajax({
-                    url: "/cabinet/user/get-user-profile"
+                    url: "/myhouse24-amirb-nikitaf/cabinet/user/get-user-profile"
                 }).done(
                     function (response){
                         $("#fullName").text(response.fullName);
@@ -126,7 +126,7 @@
                         $("#viber").text(response.viber);
                         $("#telegram").text(response.telegram);
                         $("#email").text(response.email);
-                        $("#avatar").attr("src", "/cabinet/files/"+response.filename);
+                        $("#avatar").attr("src", "/myhouse24-amirb-nikitaf/cabinet/files/"+response.filename);
 
                         $.each(response.apartments, function (index, entity) {
                             let summaryContainer = document.getElementById("apartmentContainer");
@@ -141,24 +141,24 @@
                                 "                                        <span>"+entity.fullName+"</span>\n" +
                                 "                                        <div class=\"row\" style=\"margin-top: 20px\">\n" +
                                 "                                            <div class=\"col-md-6\">\n" +
-                                "                                                <img class=\"error-photo\" style=\"width: 100%; height: 100%\" id=\"image1\" src=\"/cabinet/files/"+entity.image1+"\">\n" +
+                                "                                                <img class=\"error-photo\" style=\"width: 100%; height: 100%\" id=\"image1\" src=\"/myhouse24-amirb-nikitaf/cabinet/files/"+entity.image1+"\">\n" +
                                 "                                            </div>\n" +
                                 "                                            <div class=\"col-md-6\" style=\"align-items: center\">\n" +
                                 "                                                <div class=\"row\" style=\"height: 100%;align-items: center\">\n" +
                                 "                                                    <div class=\"row\" style=\" height: 45%\">\n" +
                                 "                                                        <div class=\"col-md-6\">\n" +
-                                "                                                            <img class=\"error-photo\" style=\"width: 100%; height: 100%\" id=\"image2\" src=\"/cabinet/files/"+entity.image2+"\">\n" +
+                                "                                                            <img class=\"error-photo\" style=\"width: 100%; height: 100%\" id=\"image2\" src=\"/myhouse24-amirb-nikitaf/cabinet/files/"+entity.image2+"\">\n" +
                                 "                                                        </div>\n" +
                                 "                                                        <div class=\"col-md-6\">\n" +
-                                "                                                            <img class=\"error-photo\" style=\"width: 100%; height: 100%\" id=\"image3\" src=\"/cabinet/files/"+entity.image3+"\">\n" +
+                                "                                                            <img class=\"error-photo\" style=\"width: 100%; height: 100%\" id=\"image3\" src=\"/myhouse24-amirb-nikitaf/cabinet/files/"+entity.image3+"\">\n" +
                                 "                                                        </div>\n" +
                                 "                                                    </div>\n" +
                                 "                                                    <div class=\"row\" style=\" height: 50%; padding-top: 5%\">\n" +
                                 "                                                        <div class=\"col-md-6\">\n" +
-                                "                                                            <img class=\"error-photo\" style=\"width: 100%; height: 100%\" id=\"image4\" src=\"/cabinet/files/"+entity.image4+"\">\n" +
+                                "                                                            <img class=\"error-photo\" style=\"width: 100%; height: 100%\" id=\"image4\" src=\"/myhouse24-amirb-nikitaf/cabinet/files/"+entity.image4+"\">\n" +
                                 "                                                        </div>\n" +
                                 "                                                        <div class=\"col-md-6\">\n" +
-                                "                                                            <img class=\"error-photo\" style=\"width: 100%; height: 100%\" id=\"image5\" src=\"/cabinet/files/"+entity.image5+"\">\n" +
+                                "                                                            <img class=\"error-photo\" style=\"width: 100%; height: 100%\" id=\"image5\" src=\"/myhouse24-amirb-nikitaf/cabinet/files/"+entity.image5+"\">\n" +
                                 "                                                        </div>\n" +
                                 "                                                    </div>\n" +
                                 "                                                </div>\n" +
@@ -213,7 +213,7 @@
                         $('.error-photo').bind('error', function() {
                             var fieldID = $(this).attr('id');
                             var photo = document.getElementById(fieldID);
-                            photo.src = "/cabinet/static/assets/images/default.jpg";
+                            photo.src = "/myhouse24-amirb-nikitaf/cabinet/static/assets/images/default.jpg";
                         });
                     }
                 )

@@ -120,7 +120,7 @@
             if ($("#apartment").val() !== '') mastersApplicationRequest.apartmentId = $("#apartment").val();
             $.ajax({
                 method: "POST",
-                url: '/cabinet/masters-applications/save-master-call',
+                url: '/myhouse24-amirb-nikitaf/cabinet/masters-applications/save-master-call',
                 contentType: 'application/json',
                 data: JSON.stringify(mastersApplicationRequest),
                 beforeSend: function () {
@@ -128,7 +128,7 @@
                 }
             }).done(function () {
                 showToast('success');
-                window.location.href = "/cabinet/masters-applications";
+                window.location.href = "/myhouse24-amirb-nikitaf/cabinet/masters-applications";
             }).fail(function (response) {
                 const errors = response.responseJSON;
                 console.log(response);
@@ -145,7 +145,7 @@
             minimumResultsForSearch: -1,
             ajax: {
                 method: 'GET',
-                url: '/cabinet/masters-applications/get-all-type-master',
+                url: '/myhouse24-amirb-nikitaf/cabinet/masters-applications/get-all-type-master',
                 cache: true,
                 delay: 1000,
                 processResults: function (data) {
@@ -166,7 +166,7 @@
             minimumResultsForSearch: -1,
             ajax: {
                 method: 'GET',
-                url: '/cabinet/masters-applications/get-all-apartment',
+                url: '/myhouse24-amirb-nikitaf/cabinet/masters-applications/get-all-apartment',
                 cache: true,
                 delay: 1000,
                 processResults: function (data) {

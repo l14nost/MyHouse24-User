@@ -271,12 +271,12 @@
         });
         $.ajax({
             method:"POST",
-            url: "/cabinet/register",
+            url: "/myhouse24-amirb-nikitaf/cabinet/register",
             contentType: 'application/json',
             data: JSON.stringify(jsonData)
         }).done(
             function (){
-                window.location.href = "/cabinet/login";
+                window.location.href = "/myhouse24-amirb-nikitaf/cabinet/login";
             }
         ).fail(
             function(response){

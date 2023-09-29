@@ -107,11 +107,11 @@
 
     function deleteEntity(){
         $.ajax({
-            url: "/cabinet/messages/delete-message/"+[[${id}]],
+            url: "/myhouse24-amirb-nikitaf/cabinet/messages/delete-message/"+[[${id}]],
             method: "DELETE"
         })
             .done(function (response){
-                window.location.href = "/cabinet/messages"
+                window.location.href = "/myhouse24-amirb-nikitaf/cabinet/messages"
             })
             .fail(function (response){
                 console.log(response);
@@ -122,7 +122,7 @@
 
     $(document).ready(function () {
         $.ajax({
-            url: "/cabinet/messages/get-message-by-id/"+[[${id}]]
+            url: "/myhouse24-amirb-nikitaf/cabinet/messages/get-message-by-id/"+[[${id}]]
         })
             .done(function (response){
                 console.log(response);

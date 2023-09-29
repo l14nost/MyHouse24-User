@@ -87,7 +87,7 @@
     function deleteEntity() {
       $.ajax({
         method: "DELETE",
-        url: "/cabinet/masters-applications/delete-master-call/" + mastersApplId,
+        url: "/myhouse24-amirb-nikitaf/cabinet/masters-applications/delete-master-call/" + mastersApplId,
         contentType: 'application/json'
       }).done(function () {
         $('#confirmDelete').modal('hide');
@@ -105,7 +105,7 @@
     function getAllMastersApplications() {
       $.ajax({
         method: "POST",
-        url: "/cabinet/masters-applications/get-all-master-call",
+        url: "/myhouse24-amirb-nikitaf/cabinet/masters-applications/get-all-master-call",
         dataType: 'json',
         contentType: 'application/json',
         data: JSON.stringify(mastersRequest)

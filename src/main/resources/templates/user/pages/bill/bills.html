@@ -132,7 +132,7 @@
     function getApartment(id) {
       $.ajax({
         method: "GET",
-        url: "/cabinet/get-apartment-" + id,
+        url: "/myhouse24-amirb-nikitaf/cabinet/get-apartment-" + id,
         contentType: 'application/json',
       }).done(function (response) {
         $("#breadcrumb").append(addBreadcrumbTitle('[[#{bills.breadcrumb}]] - ' + response?.fullName));
@@ -142,7 +142,7 @@
     function getAllBill() {
       $.ajax({
         method: "POST",
-        url: "/cabinet/get-bills",
+        url: "/myhouse24-amirb-nikitaf/cabinet/get-bills",
         dataType: 'json',
         contentType: 'application/json',
         data: JSON.stringify(billRequest)
@@ -150,7 +150,7 @@
         const TABLE_BODY = createTable('#bills-table', response?.totalElements, response?.totalPages, billRequest?.pageIndex);
         $.each(response?.content, function (index, bill) {
           $(TABLE_BODY).append(
-                  '<tr  data-href="/cabinet/bill-' + bill.id + '" data-key="' + bill.id + '">' +
+                  '<tr  data-href="/myhouse24-amirb-nikitaf/cabinet/bill-' + bill.id + '" data-key="' + bill.id + '">' +
                   '    <td>' + bill?.number + '</td>' +
                   '    <td>' + bill?.createAt + '</td>' +
                   '    <td class="h5">' + addBadgeBillStatus(bill?.status) + '</td>' +
@@ -167,7 +167,7 @@
       minimumResultsForSearch: -1,
       ajax: {
         method: 'GET',
-        url: '/cabinet/get-all-bill-status',
+        url: '/myhouse24-amirb-nikitaf/cabinet/get-all-bill-status',
         cache: true,
         delay: 1000,
         processResults: function (data) {
