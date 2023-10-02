@@ -55,7 +55,7 @@ spring:
       max-request-size: 50MB
 
 upload:
-  path: "C:/Users/Amir Banov/files"
+  path: "/files"
 
 app:
   jwt:
