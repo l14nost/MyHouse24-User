@@ -10,8 +10,6 @@ import java.util.List;
 public interface ApartmentService {
     Apartment findById(Long id);
 
-    String bankBookByApartment(Long id);
-
     List<ApartmentResponseForSidebar> getAllApartmentResponse();
 
     ApartmentResponseForRate getApartmentResponseForRateById(Long id) throws EntityNotFoundException;

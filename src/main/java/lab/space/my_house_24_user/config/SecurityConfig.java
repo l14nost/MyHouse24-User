@@ -47,12 +47,12 @@ public class SecurityConfig {
                                         SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);
                                     }
 
-                                    response.sendRedirect("/cabinet/profile");
+                                    response.sendRedirect("/myhouse24-amirb-nikitaf/cabinet/profile");
                                 })
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/", true)
+                        .defaultSuccessUrl("/profile", true)
                         .permitAll()
                 )
                 .rememberMe(rememberMe -> rememberMe.rememberMeParameter("remember-me"))

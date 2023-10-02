@@ -38,7 +38,7 @@
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="profile-img-edit photo">
-                                        <img class="personPhoto error-photo" alt="user-card img" th:src="${'/cabinet/files/'+user.filename()}" id="avatar">
+                                        <img class="personPhoto error-photo" alt="user-card img" th:src="${'/myhouse24-amirb-nikitaf/cabinet/files/'+user.filename()}" id="avatar">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -187,7 +187,7 @@
             }
         })
         function cancelUser(){
-            window.location.href = "/cabinet/profile";
+            window.location.href = "/myhouse24-amirb-nikitaf/cabinet/profile";
         }
         function getTrueDate(date){
             let trueDate= '';
@@ -200,13 +200,13 @@
             var formData = new FormData(form);
             $.ajax({
                 method:"PUT",
-                url: "/cabinet/profile/edit",
+                url: "/myhouse24-amirb-nikitaf/cabinet/profile/edit",
                 contentType: false,
                 processData: false,
                 data:formData
             }).done(
                 function (response){
-                    window.location.href = "/cabinet/profile";
+                    window.location.href = "/myhouse24-amirb-nikitaf/cabinet/profile";
                 }
             ).fail(
                 function(response){

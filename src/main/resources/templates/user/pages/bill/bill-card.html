@@ -87,7 +87,7 @@
     function getBillResponse(id) {
       $.ajax({
         method: "GET",
-        url: "/cabinet/get-bill-" + id,
+        url: "/myhouse24-amirb-nikitaf/cabinet/get-bill-" + id,
         dataType: 'json'
       }).done(function (response) {
         const SERVICE_BODY = createTableService('#service-table', response?.serviceBills)
@@ -106,7 +106,7 @@
         $("#total-price").html(response?.totalPrice);
         $("#breadcrumb").append(addBreadcrumbTitle('[[#{bills.card.breadcrumb}]] - ' + response?.number));
       }).fail(function (){
-        window.location.href = "/cabinet/error";
+        window.location.href = "/myhouse24-amirb-nikitaf/cabinet/error";
       });
     }
     function donePrint(){

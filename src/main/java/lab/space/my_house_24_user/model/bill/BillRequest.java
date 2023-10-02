@@ -1,7 +1,9 @@
 package lab.space.my_house_24_user.model.bill;
 
 import lab.space.my_house_24_user.enums.BillStatus;
+import lombok.Builder;
 
+@Builder
 public record BillRequest(
         int pageIndex,
 

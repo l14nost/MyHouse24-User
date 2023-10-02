@@ -61,17 +61,17 @@
 
                 const newClass = targetElement.className;
                 if (newClass.indexOf('sidebar-mini') === 68 || newClass.indexOf('sidebar-mini') === 78){
-                    logoImg.src = '/cabinet/assets/images/pages/logo-mini.svg';
+                    logoImg.src = '/myhouse24-amirb-nikitaf/cabinet/assets/images/pages/logo-mini.svg';
                 }
                 else if (newClass.indexOf('sidebar-mini') === -1){
                     $.ajax({
-                        url: "/cabinet/get-locale"
+                        url: "/myhouse24-amirb-nikitaf/cabinet/get-locale"
                     })
                         .done(function (response){
                             if (response === 'en') {
-                                logoImg.src = '/cabinet/assets/images/pages/logo-en.png';
+                                logoImg.src = '/myhouse24-amirb-nikitaf/cabinet/assets/images/pages/logo-en.png';
                             } else if (response === 'uk') {
-                                logoImg.src = '/cabinet/assets/images/pages/logo-ua1.png';
+                                logoImg.src = '/myhouse24-amirb-nikitaf/cabinet/assets/images/pages/logo-ua1.png';
                             }
                         });
                 }
@@ -106,7 +106,7 @@
 
     function getLocale(){
         $.ajax({
-            url: "/cabinet/get-locale"
+            url: "/myhouse24-amirb-nikitaf/cabinet/get-locale"
         })
             .done(function (response){
                 const logoImg = document.getElementById('logoImg');
@@ -120,11 +120,11 @@
                 newImg.alt="lang";
                 newImg.id = "langImg"
                 if (response === 'en') {
-                    newImg.src = '/cabinet/assets/images/Flag/flag001.png';
-                    logoImg.src = '/cabinet/assets/images/pages/logo-en.png';
+                    newImg.src = '/myhouse24-amirb-nikitaf/cabinet/assets/images/Flag/flag001.png';
+                    logoImg.src = '/myhouse24-amirb-nikitaf/cabinet/assets/images/pages/logo-en.png';
                 } else if (response === 'uk') {
-                    newImg.src  = '/cabinet/assets/images/Flag/flag002.png';
-                    logoImg.src = '/cabinet/assets/images/pages/logo-ua1.png';
+                    newImg.src  = '/myhouse24-amirb-nikitaf/cabinet/assets/images/Flag/flag002.png';
+                    logoImg.src = '/myhouse24-amirb-nikitaf/cabinet/assets/images/pages/logo-ua1.png';
                 }
                 container.appendChild(newImg);
             });
@@ -276,7 +276,7 @@
         var navLinks = document.querySelectorAll(".sidebar-active");
         var pathAndQuery = window.location.pathname + window.location.search;
         var pathSplit = pathAndQuery.split("/");
-        var chapter = pathSplit[2];
+        var chapter = pathSplit[3];
 
         var ids = [];
         var idsSpecial = ["summary", "rate", "bill"];
@@ -342,7 +342,7 @@
     checkbox.addEventListener('change', function() {
         if (this.checked) {
             $.ajax({
-                url: "/cabinet/change-theme",
+                url: "/myhouse24-amirb-nikitaf/cabinet/change-theme",
                 method: "POST",
                 data:{
                     theme: true
@@ -351,7 +351,7 @@
             changeTheme(true);
         } else {
             $.ajax({
-                url: "/cabinet/change-theme",
+                url: "/myhouse24-amirb-nikitaf/cabinet/change-theme",
                 method: "POST",
                 data:{
                     theme: false
@@ -364,7 +364,7 @@
     $(document).ready ( function(){
 
         $.ajax({
-            url: "/cabinet/messages/get-message-for-header"
+            url: "/myhouse24-amirb-nikitaf/cabinet/messages/get-message-for-header"
         })
             .done(function(response) {
                 console.log(response.length);
@@ -386,7 +386,7 @@
                             let summaryContainer = document.getElementById("containerNewMessage");
                             let newLi = document.createElement("a");
                             newLi.classList.add("iq-sub-card")
-                            newLi.href = "/cabinet/messages/message-card/"+entity.id
+                            newLi.href = "/myhouse24-amirb-nikitaf/cabinet/messages/message-card/"+entity.id
                             newLi.innerHTML = "<div class=\"d-flex align-items-center\" >\n" +
                                 "            <div class=\"ms-3 d-flex justify-content-between\" style='width: 100%'>\n" +
                                 "                <h6>"+entity.title+"</h6>\n" +
@@ -407,7 +407,7 @@
 
         function getTheme() {
             $.ajax({
-                url: "/cabinet/get-theme"
+                url: "/myhouse24-amirb-nikitaf/cabinet/get-theme"
             })
                 .done(function(response) {
                     const checkbox = document.getElementById('switchTheme');
@@ -425,17 +425,17 @@
 
 
         $.ajax({
-            url: "/cabinet/user/get-current-user"
+            url: "/myhouse24-amirb-nikitaf/cabinet/user/get-current-user"
         })
             .done(function(response) {
 
                 $("#fullName-user").text(response.fullName)
-                $("#header-avatar").attr("src", "/cabinet/files/"+response.filename)
+                $("#header-avatar").attr("src", "/myhouse24-amirb-nikitaf/cabinet/files/"+response.filename)
                 $.each(response.apartments, function (index, entity) {
                     let summaryContainer = document.getElementById("sidebar-summary");
                     let newLi = document.createElement("li");
                     newLi.classList.add("nav-item")
-                    newLi.innerHTML = " <a class=\"nav-link site sidebar-active\" href=\"/cabinet/summary-" + entity.id + "\" id=\"summary-"+entity.id+"\">\n" +
+                    newLi.innerHTML = " <a class=\"nav-link site sidebar-active\" href=\"/myhouse24-amirb-nikitaf/cabinet/summary-" + entity.id + "\" id=\"summary-"+entity.id+"\">\n" +
                         "                                <i class=\"icon\">\n" +
                         "                                    <svg class=\"icon-10\" xmlns=\"http://www.w3.org/2000/svg\" width=\"10\" viewBox=\"0 0 24 24\" fill=\"currentColor\">\n" +
                         "                                        <g>\n" +
@@ -614,14 +614,14 @@
             var testImage = new Image();
             testImage.src = image.src;
             testImage.addEventListener("error", function() {
-                image.src = "/cabinet/static/assets/images/default.jpg";
+                image.src = "/myhouse24-amirb-nikitaf/cabinet/static/assets/images/default.jpg";
             });
         });
 
         $('.error-photo').bind('error', function() {
             var fieldID = $(this).attr('id');
             var photo = document.getElementById(fieldID);
-            photo.src = "/cabinet/static/assets/images/default.jpg";
+            photo.src = "/myhouse24-amirb-nikitaf/cabinet/static/assets/images/default.jpg";
         });
     });
 </script>
