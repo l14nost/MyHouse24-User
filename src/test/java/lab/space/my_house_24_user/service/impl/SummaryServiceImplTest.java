@@ -1,22 +1,33 @@
 package lab.space.my_house_24_user.service.impl;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 import lab.space.my_house_24_user.entity.*;
 import lab.space.my_house_24_user.model.summary.CostChartResponse;
 import lab.space.my_house_24_user.model.summary.SummaryResponse;
 import lab.space.my_house_24_user.service.ApartmentService;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Base64;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -25,7 +36,6 @@ class SummaryServiceImplTest {
     private ApartmentService apartmentService;
     @InjectMocks
     private SummaryServiceImpl summaryService;
-
     @Test
     void summaryByApartment() {
         when(apartmentService.findById(1L)).thenReturn(Apartment.builder()
@@ -34,11 +44,11 @@ class SummaryServiceImplTest {
                         .bankBook(BankBook.builder()
                                 .number("000002")
                                 .bill(List.of(
+                                        Bill.builder().totalPrice(new BigDecimal(200)).periodOf(LocalDateTime.of(2023,12,12,3,21)).serviceBillList(List.of(ServiceBill.builder().service(Service.builder().name("name").build()).totalPrice(new BigDecimal(200)).build())).build(),
+                                        Bill.builder().totalPrice(new BigDecimal(200)).periodOf(LocalDateTime.of(2023,12,12,3,21)).serviceBillList(List.of(ServiceBill.builder().service(Service.builder().name("name1").build()).totalPrice(new BigDecimal(200)).build())).build(),
                                         Bill.builder().totalPrice(new BigDecimal(200)).periodOf(LocalDateTime.of(2023,11,12,3,21)).serviceBillList(List.of(ServiceBill.builder().service(Service.builder().name("name").build()).totalPrice(new BigDecimal(200)).build())).build(),
-                                        Bill.builder().totalPrice(new BigDecimal(200)).periodOf(LocalDateTime.of(2023,11,12,3,21)).serviceBillList(List.of(ServiceBill.builder().service(Service.builder().name("name1").build()).totalPrice(new BigDecimal(200)).build())).build(),
-                                        Bill.builder().totalPrice(new BigDecimal(200)).periodOf(LocalDateTime.of(2023,10,12,3,21)).serviceBillList(List.of(ServiceBill.builder().service(Service.builder().name("name").build()).totalPrice(new BigDecimal(200)).build())).build(),
-                                        Bill.builder().totalPrice(new BigDecimal(400)).periodOf(LocalDateTime.of(2023,10,12,3,21)).serviceBillList(List.of(ServiceBill.builder().service(Service.builder().name("name1").build()).totalPrice(new BigDecimal(400)).build())).build(),
-                                        Bill.builder().totalPrice(new BigDecimal(200)).periodOf(LocalDateTime.of(2023,8,12,3,21)).serviceBillList(List.of(
+                                        Bill.builder().totalPrice(new BigDecimal(400)).periodOf(LocalDateTime.of(2023,11,12,3,21)).serviceBillList(List.of(ServiceBill.builder().service(Service.builder().name("name1").build()).totalPrice(new BigDecimal(400)).build())).build(),
+                                        Bill.builder().totalPrice(new BigDecimal(200)).periodOf(LocalDateTime.of(2023,9,12,3,21)).serviceBillList(List.of(
                                                 ServiceBill.builder().service(Service.builder().name("name").build()).totalPrice(new BigDecimal(100)).build(),
                                                 ServiceBill.builder().service(Service.builder().name("name1").build()).totalPrice(new BigDecimal(100)).build())
                                         ).build()
@@ -59,11 +69,11 @@ class SummaryServiceImplTest {
                         new BigDecimal(0),
                         new BigDecimal(0),
                         new BigDecimal(0),
+                        new BigDecimal(0),
                         new BigDecimal(200),
                         new BigDecimal(0),
                         new BigDecimal(600),
-                        new BigDecimal(400),
-                        new BigDecimal(0)
+                        new BigDecimal(400)
 
                 ))
                 .costChartMonthResponse(
