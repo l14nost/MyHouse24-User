@@ -53,5 +53,9 @@ public class House {
     @ManyToMany(mappedBy = "houseList")
     private List<Staff> staffList = new ArrayList<>();
 
+    @OneToOne(mappedBy = "house", cascade = CascadeType.ALL)
+    @JoinColumn(name = "chat_id")
+    private Chat chat;
+
 
 }
