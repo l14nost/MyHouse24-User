@@ -289,12 +289,14 @@
             if (chapter.includes(ids[i])){
                 var targetLinks = document.getElementById(ids[i]);
                 targetLinks.classList.add("active");
-                for (let j =0; j<idsSpecial.length; j++){
-                    if (ids[i].includes(idsSpecial[j])){
-                        var targetUlSite = document.getElementById("sidebar-"+idsSpecial[j]);
-                        var linkElement = document.getElementById(idsSpecial[j]+'-a');
-                        linkElement.setAttribute('aria-expanded', 'true');
-                        targetUlSite.classList.add("show");
+                if (chapter === ids[i]) {
+                    for (let j = 0; j < idsSpecial.length; j++) {
+                        if (ids[i].includes(idsSpecial[j])) {
+                            var targetUlSite = document.getElementById("sidebar-" + idsSpecial[j]);
+                            var linkElement = document.getElementById(idsSpecial[j] + '-a');
+                            linkElement.setAttribute('aria-expanded', 'true');
+                            targetUlSite.classList.add("show");
+                        }
                     }
                 }
             }
