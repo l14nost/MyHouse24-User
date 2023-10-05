@@ -48,6 +48,7 @@
 <script th:src="@{/assets/js/plugins/prism.mini.js}"></script>
 
 
+
 <script>
 
     const targetElement = document.getElementById('sidebar');
@@ -608,6 +609,12 @@
     }
 </script>
 <script>
+
+    function errorPhoto(element){
+        var fieldID = element.id;
+        var photo = document.getElementById(fieldID);
+        photo.src = "/myhouse24-amirb-nikitaf/cabinet/static/assets/images/default.jpg";
+    }
     $(document).ready(function() {
         var errorImages = document.querySelectorAll(".error-photo");
         errorImages.forEach(function(image) {

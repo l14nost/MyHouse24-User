@@ -36,13 +36,9 @@ public class LoginController {
 
     @GetMapping({"", "/"})
     public ModelAndView showLogin() {
-        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
-        if (authentication.isAuthenticated() && authentication.getPrincipal() instanceof User && authentication.getAuthorities().equals(List.of(new SimpleGrantedAuthority(UserStatus.ACTIVE.name())))){
-            return new ModelAndView("redirect:/index");
-        }else {
             return new ModelAndView("user/pages/auth/login");
-        }
     }
+
 
 
     @GetMapping({"/forgot-password-send"})
