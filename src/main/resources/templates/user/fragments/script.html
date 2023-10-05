@@ -287,9 +287,9 @@
         for (var i =0; i< ids.length; i++){
 
             if (chapter.includes(ids[i])){
-                var targetLinks = document.getElementById(ids[i]);
-                targetLinks.classList.add("active");
                 if (chapter === ids[i]) {
+                    var targetLinks = document.getElementById(ids[i]);
+                    targetLinks.classList.add("active");
                     for (let j = 0; j < idsSpecial.length; j++) {
                         if (ids[i].includes(idsSpecial[j])) {
                             var targetUlSite = document.getElementById("sidebar-" + idsSpecial[j]);
@@ -298,6 +298,10 @@
                             targetUlSite.classList.add("show");
                         }
                     }
+                }
+                else if (!chapter.includes('summary') && !chapter.includes('rate') && !chapter.includes('bill')){
+                    var targetLinks = document.getElementById(ids[i]);
+                    targetLinks.classList.add("active");
                 }
             }
         }
