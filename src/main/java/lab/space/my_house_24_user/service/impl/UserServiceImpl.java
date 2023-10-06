@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final JwtService jwtService;
     private final CustomMailSender customMailSender;
 
-    private final String url = "http://localhost:8082/cabinet/";
+    private final String url = "https://slj.avada-media-dev1.od.ua/myhouse24-amirb-nikitaf/cabinet/";
 
 
     @Override
