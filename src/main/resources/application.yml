@@ -32,8 +32,8 @@ spring:
             client-id: Iv1.3bea1ea44c34a11b
             client-secret: b48b48ba6f45c1e63858a6f4c3534b93fe1e760f
           google:
-            client-id: 799352228923-un3c3udmi4lj4e9hrjn6hqe15rd3rgu5.apps.googleusercontent.com
-            client-secret: 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
+            client-id: 799352228923-tcq2tkb7f8mnc5u8mqa9tbthmfadfjh0.apps.googleusercontent.com
+            client-secret: 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
         provider:
           google:
             user-name-attribute: email
