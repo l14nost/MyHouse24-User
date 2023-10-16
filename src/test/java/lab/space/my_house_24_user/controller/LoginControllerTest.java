@@ -74,8 +74,8 @@ class LoginControllerTest {
         SecurityContextHolder.setContext(securityContext);
 
         mockMvc.perform(get("/login"))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/index"));
+                .andExpect(status().isOk())
+                .andExpect(view().name("user/pages/auth/login"));
     }
 
     @Test

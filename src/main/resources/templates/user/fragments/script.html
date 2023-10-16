@@ -48,6 +48,7 @@
 <script th:src="@{/assets/js/plugins/prism.mini.js}"></script>
 
 
+
 <script>
 
     const targetElement = document.getElementById('sidebar');
@@ -296,15 +297,21 @@
         for (var i =0; i< ids.length; i++){
 
             if (chapter.includes(ids[i])){
-                var targetLinks = document.getElementById(ids[i]);
-                targetLinks.classList.add("active");
-                for (let j =0; j<idsSpecial.length; j++){
-                    if (ids[i].includes(idsSpecial[j])){
-                        var targetUlSite = document.getElementById("sidebar-"+idsSpecial[j]);
-                        var linkElement = document.getElementById(idsSpecial[j]+'-a');
-                        linkElement.setAttribute('aria-expanded', 'true');
-                        targetUlSite.classList.add("show");
+                if (chapter === ids[i]) {
+                    var targetLinks = document.getElementById(ids[i]);
+                    targetLinks.classList.add("active");
+                    for (let j = 0; j < idsSpecial.length; j++) {
+                        if (ids[i].includes(idsSpecial[j])) {
+                            var targetUlSite = document.getElementById("sidebar-" + idsSpecial[j]);
+                            var linkElement = document.getElementById(idsSpecial[j] + '-a');
+                            linkElement.setAttribute('aria-expanded', 'true');
+                            targetUlSite.classList.add("show");
+                        }
                     }
+                }
+                else if (!chapter.includes('summary') && !chapter.includes('rate') && !chapter.includes('bill')){
+                    var targetLinks = document.getElementById(ids[i]);
+                    targetLinks.classList.add("active");
                 }
             }
         }
@@ -618,6 +625,12 @@
     }
 </script>
 <script>
+
+    function errorPhoto(element){
+        var fieldID = element.id;
+        var photo = document.getElementById(fieldID);
+        photo.src = "/myhouse24-amirb-nikitaf/cabinet/static/assets/images/default.jpg";
+    }
     $(document).ready(function() {
         var errorImages = document.querySelectorAll(".error-photo");
         errorImages.forEach(function(image) {
