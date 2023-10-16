@@ -20,6 +20,9 @@ public class MastersApplicationSpecification {
                         criteriaBuilder.equal(root.get("user").get("email"), email)
                 ));
             }
+            predicates.add(criteriaBuilder.or(
+                    criteriaBuilder.equal(root.get("isActive"), true)
+            ));
             query.orderBy(criteriaBuilder.desc(root.get("id")));
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };
