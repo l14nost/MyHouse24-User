@@ -97,7 +97,8 @@
       }).fail(function (response) {
         console.log(response);
         $('#confirmDelete').modal('hide');
-        showToast('error');
+        $('#custom-toast').text(response?.responseText)
+        showToast('custom');
         mastersApplId = undefined;
       })
     }
@@ -125,19 +126,13 @@
                   '<tr>' +
                   '    <td>' + mastersAppl?.id + '</td>' +
                   '    <td>' + mastersAppl?.masterType?.value + '</td>' +
-                  '    <td>' + mastersAppl?.description + '</td>' +
+                  '    <td class="text-truncate" style="max-width: 400px">' + mastersAppl?.description + '</td>' +
                   '    <td>' + mastersAppl?.apartment?.fullName + '</td>' +
                   '    <td>' + (mastersAppl?.date + ' - ' + mastersAppl?.time) + '</td>' +
                   '    <td class="h5">' + addBadgeApplicationStatus(mastersAppl?.status) + '</td>' +
                   '    <td>' + $deleteBtn + '</td>' +
                   '</tr>'
           );
-        });
-        document.querySelectorAll("a.btn.btn-sm.btn-icon.text-danger").forEach(function (button) {
-          let status = button.getAttribute("data-status");
-          if (status !== "NEW") {
-            button.classList.add('disabled');
-          }
         });
       });
     }

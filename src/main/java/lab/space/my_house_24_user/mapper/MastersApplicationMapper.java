@@ -43,6 +43,7 @@ public interface MastersApplicationMapper {
                 .staff(null)
                 .user(user)
                 .apartment(apartment)
+                .isActive(true)
                 .build();
     }
 }

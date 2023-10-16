@@ -135,14 +135,24 @@
 
     const toastSuccess = bootstrap.Toast.getOrCreateInstance(document.getElementById('successUpdateRole'));
     const toastError = bootstrap.Toast.getOrCreateInstance(document.getElementById('errorUpdateRole'));
+    const toastCustom = bootstrap.Toast.getOrCreateInstance(document.getElementById('errorCustomToast'));
 
     function showToast(toast) {
         switch (toast) {
             case "success":
+                toastError.hide();
+                toastCustom.hide();
                 toastSuccess.show();
                 break;
             case "error":
+                toastSuccess.hide();
+                toastCustom.hide();
                 toastError.show();
+                break;
+            case "custom":
+                toastSuccess.hide();
+                toastError.hide();
+                toastCustom.show();
                 break;
             default:
                 console.log("Unknown Toast");

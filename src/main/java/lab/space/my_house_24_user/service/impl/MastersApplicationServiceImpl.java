@@ -105,12 +105,19 @@ public class MastersApplicationServiceImpl implements MastersApplicationService 
     public void deleteMastersApplicationById(Long id) throws EntityNotFoundException, IllegalArgumentException {
         log.info("Try to delete MastersApplication");
         MastersApplication mastersApplication = getMastersApplicationById(id);
-        if (mastersApplication.getMastersApplicationStatus() != MastersApplicationStatus.NEW) {
+        if (mastersApplication.getMastersApplicationStatus() == MastersApplicationStatus.IN_PROCESS) {
             log.error("MastersApplication cant be deleted");
             throw new IllegalArgumentException("MastersApplication cant be deleted");
+        }else{
+            updateIsActiveStatusMastersApplication(mastersApplication);
         }
-        mastersApplicationRepository.delete(mastersApplication);
-        log.info("Success delete MastersApplication by id " + id);
+    }
 
+    private void updateIsActiveStatusMastersApplication(MastersApplication mastersApplication){
+        log.info("Try to update isActive and status MastersApplication");
+        mastersApplication.setIsActive(false);
+        mastersApplication.setMastersApplicationStatus(MastersApplicationStatus.COMPLETED);
+        mastersApplicationRepository.save(mastersApplication);
+        log.info("Success update isActive status MastersApplication");
     }
 }
