@@ -72,7 +72,7 @@ public class SummaryServiceImpl implements SummaryService {
             averageCost = averageCost.add(costByMonth.get(i));
         }
         if (!costByMonth.isEmpty()) {
-            return averageCost.divide(new BigDecimal(costByMonth.size()),10, RoundingMode.HALF_UP);
+            return averageCost.divide(new BigDecimal(costByMonth.size()),2, RoundingMode.HALF_UP);
         }
         else return BigDecimal.ZERO;
     }
