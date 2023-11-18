@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -71,7 +72,7 @@ public class SummaryServiceImpl implements SummaryService {
             averageCost = averageCost.add(costByMonth.get(i));
         }
         if (!costByMonth.isEmpty()) {
-            return averageCost.divide(new BigDecimal(costByMonth.size()));
+            return averageCost.divide(new BigDecimal(costByMonth.size()),10, RoundingMode.HALF_UP);
         }
         else return BigDecimal.ZERO;
     }
