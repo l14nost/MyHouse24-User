@@ -49,7 +49,13 @@ public class MessageController {
 
     @GetMapping("/get-message-for-header")
     public ResponseEntity getAllMessageForHeader(){
-        return ResponseEntity.ok().body(messageService.findAllForMessageHeader());
+        try {
+            return ResponseEntity.ok().body(messageService.findAllForMessageHeader());
+        }
+        catch (EntityNotFoundException e){
+            return ResponseEntity.badRequest().build();
+        }
+
     }
 
     @DeleteMapping("/delete-message/{id}")
