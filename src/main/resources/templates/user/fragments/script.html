@@ -410,7 +410,10 @@
 
                         })
 
-                });
+                })
+            .fail(function (){
+                window.location.href = '/myhouse24-amirb-nikitaf/cabinet/logout'
+            });
 
         function getTheme() {
             $.ajax({

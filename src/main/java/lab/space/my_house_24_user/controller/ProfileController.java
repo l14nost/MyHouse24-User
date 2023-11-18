@@ -1,5 +1,6 @@
 package lab.space.my_house_24_user.controller;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lab.space.my_house_24_user.model.user.UserEditRequest;
 import lab.space.my_house_24_user.service.UserService;
@@ -23,9 +24,17 @@ public class ProfileController {
 
     @GetMapping("/edit")
     public ModelAndView profileEditPage(){
-        ModelAndView model = new ModelAndView("user/pages/profile/profile-edit");
-        model.addObject("user", userService.findUserForEdit());
-        return model;
+
+        try {
+            ModelAndView model = new ModelAndView("user/pages/profile/profile-edit");
+            model.addObject("user", userService.findUserForEdit());
+            return model;
+        }
+        catch (EntityNotFoundException e){
+            return new ModelAndView("redirect:/logout");
+        }
+
+
     }
 
 
