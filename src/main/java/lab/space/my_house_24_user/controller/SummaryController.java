@@ -18,8 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 public class SummaryController {
     private final SummaryService summaryService;
 
-
-
     @GetMapping("/summary-{id}")
     public ModelAndView summaryPage(@PathVariable Long id){
         ModelAndView modelAndView = new ModelAndView("user/pages/statistic/statistic");
